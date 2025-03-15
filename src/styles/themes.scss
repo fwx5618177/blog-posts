@@ -1,0 +1,542 @@
+/* Theme Styles */
+@use "./mixins" as mixins;
+
+/* Base Theme Transition */
+body {
+  @include mixins.theme-transition;
+}
+
+/* Light Theme (Default) */
+:root,
+[data-theme="light"] {
+  // Color variables are defined in variables.scss
+
+  // Add RGB versions of colors for rgba usage
+  --color-primary-rgb: 52, 152, 219;
+  --color-primary-light-rgb: 93, 173, 226;
+  --color-primary-dark-rgb: 41, 128, 185;
+  --color-secondary-rgb: 46, 204, 113;
+  --color-secondary-light-rgb: 88, 214, 141;
+  --color-secondary-dark-rgb: 39, 174, 96;
+  --color-accent-rgb: 231, 76, 60;
+  --color-accent-light-rgb: 236, 112, 99;
+  --color-accent-dark-rgb: 192, 57, 43;
+  --color-background-rgb: 255, 255, 255;
+  --color-surface-rgb: 248, 249, 250;
+  --color-card-rgb: 255, 255, 255;
+  --color-text-primary-rgb: 51, 51, 51;
+  --color-text-secondary-rgb: 102, 102, 102;
+  --color-text-tertiary-rgb: 153, 153, 153;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  // Color variables are defined in variables.scss
+
+  // Add RGB versions of colors for rgba usage
+  --color-primary-rgb: 52, 152, 219;
+  --color-primary-light-rgb: 93, 173, 226;
+  --color-primary-dark-rgb: 41, 128, 185;
+  --color-secondary-rgb: 46, 204, 113;
+  --color-secondary-light-rgb: 88, 214, 141;
+  --color-secondary-dark-rgb: 39, 174, 96;
+  --color-accent-rgb: 231, 76, 60;
+  --color-accent-light-rgb: 236, 112, 99;
+  --color-accent-dark-rgb: 192, 57, 43;
+  --color-background-rgb: 18, 18, 18;
+  --color-surface-rgb: 30, 30, 30;
+  --color-card-rgb: 45, 45, 45;
+  --color-text-primary-rgb: 245, 245, 245;
+  --color-text-secondary-rgb: 179, 179, 179;
+  --color-text-tertiary-rgb: 128, 128, 128;
+}
+
+/* Sepia Theme */
+[data-theme="sepia"] {
+  --color-primary: #8c6d46;
+  --color-primary-light: #a58764;
+  --color-primary-dark: #735a3a;
+  --color-secondary: #6b8e23;
+  --color-secondary-light: #8ab33b;
+  --color-secondary-dark: #556b2f;
+  --color-accent: #a0522d;
+  --color-accent-light: #b56e48;
+  --color-accent-dark: #8b4513;
+
+  --color-background: #f8f4e5;
+  --color-surface: #f1ead9;
+  --color-card: #f8f4e5;
+  --color-border: #d3c6a6;
+  --color-divider: #e0d8c0;
+
+  --color-text-primary: #5c4b35;
+  --color-text-secondary: #7d6b4e;
+  --color-text-tertiary: #9e8b6c;
+  --color-text-disabled: #c0b49a;
+  --color-text-inverse: #f8f4e5;
+
+  --color-code-background: #e8e0cc;
+  --color-code-text: #5c4b35;
+  --color-code-comment: #9e8b6c;
+  --color-code-keyword: #8c6d46;
+  --color-code-function: #6b8e23;
+  --color-code-string: #a0522d;
+  --color-code-number: #a0522d;
+  --color-code-tag: #8c6d46;
+  --color-code-attribute: #6b8e23;
+
+  --color-primary-rgb: 140, 109, 70;
+  --color-primary-light-rgb: 165, 135, 100;
+  --color-primary-dark-rgb: 115, 90, 58;
+  --color-secondary-rgb: 107, 142, 35;
+  --color-secondary-light-rgb: 138, 179, 59;
+  --color-secondary-dark-rgb: 85, 107, 47;
+  --color-accent-rgb: 160, 82, 45;
+  --color-accent-light-rgb: 181, 110, 72;
+  --color-accent-dark-rgb: 139, 69, 19;
+  --color-background-rgb: 248, 244, 229;
+  --color-surface-rgb: 241, 234, 217;
+  --color-card-rgb: 248, 244, 229;
+  --color-text-primary-rgb: 92, 75, 53;
+  --color-text-secondary-rgb: 125, 107, 78;
+  --color-text-tertiary-rgb: 158, 139, 108;
+}
+
+/* High Contrast Theme */
+[data-theme="high-contrast"] {
+  --color-primary: #0000ee;
+  --color-primary-light: #3333ff;
+  --color-primary-dark: #0000cc;
+  --color-secondary: #008000;
+  --color-secondary-light: #00a000;
+  --color-secondary-dark: #006000;
+  --color-accent: #ee0000;
+  --color-accent-light: #ff3333;
+  --color-accent-dark: #cc0000;
+
+  --color-background: #ffffff;
+  --color-surface: #f0f0f0;
+  --color-card: #ffffff;
+  --color-border: #000000;
+  --color-divider: #000000;
+
+  --color-text-primary: #000000;
+  --color-text-secondary: #000000;
+  --color-text-tertiary: #000000;
+  --color-text-disabled: #555555;
+  --color-text-inverse: #ffffff;
+
+  --color-code-background: #f0f0f0;
+  --color-code-text: #000000;
+  --color-code-comment: #555555;
+  --color-code-keyword: #0000ee;
+  --color-code-function: #008000;
+  --color-code-string: #ee0000;
+  --color-code-number: #ee0000;
+  --color-code-tag: #0000ee;
+  --color-code-attribute: #008000;
+
+  --color-primary-rgb: 0, 0, 238;
+  --color-primary-light-rgb: 51, 51, 255;
+  --color-primary-dark-rgb: 0, 0, 204;
+  --color-secondary-rgb: 0, 128, 0;
+  --color-secondary-light-rgb: 0, 160, 0;
+  --color-secondary-dark-rgb: 0, 96, 0;
+  --color-accent-rgb: 238, 0, 0;
+  --color-accent-light-rgb: 255, 51, 51;
+  --color-accent-dark-rgb: 204, 0, 0;
+  --color-background-rgb: 255, 255, 255;
+  --color-surface-rgb: 240, 240, 240;
+  --color-card-rgb: 255, 255, 255;
+  --color-text-primary-rgb: 0, 0, 0;
+  --color-text-secondary-rgb: 0, 0, 0;
+  --color-text-tertiary-rgb: 0, 0, 0;
+
+  // Increase contrast for focus states
+  --shadow-focus: 0 0 0 4px rgba(0, 0, 238, 0.5);
+}
+
+/* Dark High Contrast Theme */
+[data-theme="dark-high-contrast"] {
+  --color-primary: #00aaff;
+  --color-primary-light: #33bbff;
+  --color-primary-dark: #0088cc;
+  --color-secondary: #00ff00;
+  --color-secondary-light: #33ff33;
+  --color-secondary-dark: #00cc00;
+  --color-accent: #ff0000;
+  --color-accent-light: #ff3333;
+  --color-accent-dark: #cc0000;
+
+  --color-background: #000000;
+  --color-surface: #0f0f0f;
+  --color-card: #1a1a1a;
+  --color-border: #ffffff;
+  --color-divider: #ffffff;
+
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #ffffff;
+  --color-text-tertiary: #ffffff;
+  --color-text-disabled: #aaaaaa;
+  --color-text-inverse: #000000;
+
+  --color-code-background: #0f0f0f;
+  --color-code-text: #ffffff;
+  --color-code-comment: #aaaaaa;
+  --color-code-keyword: #00aaff;
+  --color-code-function: #00ff00;
+  --color-code-string: #ff0000;
+  --color-code-number: #ff0000;
+  --color-code-tag: #00aaff;
+  --color-code-attribute: #00ff00;
+
+  --color-primary-rgb: 0, 170, 255;
+  --color-primary-light-rgb: 51, 187, 255;
+  --color-primary-dark-rgb: 0, 136, 204;
+  --color-secondary-rgb: 0, 255, 0;
+  --color-secondary-light-rgb: 51, 255, 51;
+  --color-secondary-dark-rgb: 0, 204, 0;
+  --color-accent-rgb: 255, 0, 0;
+  --color-accent-light-rgb: 255, 51, 51;
+  --color-accent-dark-rgb: 204, 0, 0;
+  --color-background-rgb: 0, 0, 0;
+  --color-surface-rgb: 15, 15, 15;
+  --color-card-rgb: 26, 26, 26;
+  --color-text-primary-rgb: 255, 255, 255;
+  --color-text-secondary-rgb: 255, 255, 255;
+  --color-text-tertiary-rgb: 255, 255, 255;
+
+  // Increase contrast for focus states
+  --shadow-focus: 0 0 0 4px rgba(0, 170, 255, 0.5);
+}
+
+/* Theme Specific Elements */
+
+// Cards
+.card {
+  background-color: var(--color-card);
+  color: var(--color-text-primary);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  @include mixins.theme-transition;
+}
+
+// Buttons
+.btn {
+  @include mixins.button-base;
+  @include mixins.theme-transition;
+
+  &:focus-visible {
+    @include mixins.focus-ring;
+  }
+}
+
+.btn-primary {
+  @include mixins.button-primary;
+}
+
+.btn-secondary {
+  @include mixins.button-secondary;
+}
+
+.btn-outline {
+  @include mixins.button-outline;
+}
+
+.btn-ghost {
+  @include mixins.button-ghost;
+}
+
+.btn-sm {
+  padding: var(--spacing-1) var(--spacing-3);
+  font-size: var(--font-size-xs);
+}
+
+.btn-lg {
+  padding: var(--spacing-3) var(--spacing-6);
+  font-size: var(--font-size-md);
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    margin-right: var(--spacing-2);
+  }
+
+  &.btn-icon-only {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+
+    svg {
+      margin-right: 0;
+    }
+  }
+}
+
+.btn-group {
+  display: inline-flex;
+
+  .btn {
+    border-radius: 0;
+
+    &:first-child {
+      border-top-left-radius: var(--border-radius-md);
+      border-bottom-left-radius: var(--border-radius-md);
+    }
+
+    &:last-child {
+      border-top-right-radius: var(--border-radius-md);
+      border-bottom-right-radius: var(--border-radius-md);
+    }
+  }
+}
+
+// Inputs
+input,
+textarea,
+select {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
+  @include mixins.theme-transition;
+
+  &::placeholder {
+    color: var(--color-text-tertiary);
+  }
+
+  &:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
+  }
+}
+
+// Code blocks
+pre,
+code {
+  background-color: var(--color-code-background);
+  color: var(--color-code-text);
+  @include mixins.theme-transition;
+}
+
+// Navigation
+nav {
+  @include mixins.theme-transition;
+}
+
+// Links
+a {
+  color: var(--color-primary);
+  @include mixins.theme-transition;
+
+  &:hover {
+    color: var(--color-primary-dark);
+  }
+}
+
+// Tables
+table {
+  border-color: var(--color-border);
+  @include mixins.theme-transition;
+
+  th {
+    background-color: var(--color-surface);
+  }
+
+  tr:nth-child(even) {
+    background-color: rgba(var(--color-surface-rgb), 0.5);
+  }
+}
+
+// Form elements
+.form-group {
+  margin-bottom: var(--spacing-4);
+
+  label {
+    display: block;
+    margin-bottom: var(--spacing-2);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+  }
+
+  .form-text {
+    display: block;
+    margin-top: var(--spacing-1);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+  }
+}
+
+// Alerts
+.alert {
+  padding: var(--spacing-4);
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-4);
+  @include mixins.theme-transition;
+
+  &.alert-primary {
+    background-color: rgba(var(--color-primary-rgb), 0.1);
+    color: var(--color-primary-dark);
+    border-left: 4px solid var(--color-primary);
+  }
+
+  &.alert-secondary {
+    background-color: rgba(var(--color-secondary-rgb), 0.1);
+    color: var(--color-secondary-dark);
+    border-left: 4px solid var(--color-secondary);
+  }
+
+  &.alert-success {
+    background-color: rgba(var(--color-secondary-rgb), 0.1);
+    color: var(--color-secondary-dark);
+    border-left: 4px solid var(--color-secondary);
+  }
+
+  &.alert-warning {
+    background-color: rgba(var(--color-warning-rgb), 0.1);
+    color: var(--color-warning-dark);
+    border-left: 4px solid var(--color-warning);
+  }
+
+  &.alert-error {
+    background-color: rgba(var(--color-error-rgb), 0.1);
+    color: var(--color-error-dark);
+    border-left: 4px solid var(--color-error);
+  }
+
+  &.alert-info {
+    background-color: rgba(var(--color-info-rgb), 0.1);
+    color: var(--color-info-dark);
+    border-left: 4px solid var(--color-info);
+  }
+}
+
+/* Theme Animation */
+.theme-transition-enter {
+  opacity: 0;
+}
+
+.theme-transition-enter-active {
+  opacity: 1;
+  transition: opacity var(--transition-normal) var(--transition-timing-function);
+}
+
+.theme-transition-exit {
+  opacity: 1;
+}
+
+.theme-transition-exit-active {
+  opacity: 0;
+  transition: opacity var(--transition-normal) var(--transition-timing-function);
+}
+
+/* Color Mode Preference Detection */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    // Instead of extending, copy the dark theme variables directly
+    --color-primary: #3498db;
+    --color-primary-light: #5dade2;
+    --color-primary-dark: #2980b9;
+    --color-secondary: #2ecc71;
+    --color-secondary-light: #58d68d;
+    --color-secondary-dark: #27ae60;
+    --color-accent: #e74c3c;
+    --color-accent-light: #ec7063;
+    --color-accent-dark: #c0392b;
+
+    --color-background: #121212;
+    --color-surface: #1e1e1e;
+    --color-card: #2a2a2a;
+    --color-border: #333333;
+    --color-divider: #333333;
+
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #cccccc;
+    --color-text-tertiary: #999999;
+    --color-text-disabled: #666666;
+    --color-text-inverse: #000000;
+
+    --color-code-background: #1a1a1a;
+    --color-code-text: #f8f8f2;
+    --color-code-comment: #6272a4;
+    --color-code-keyword: #ff79c6;
+    --color-code-function: #50fa7b;
+    --color-code-string: #f1fa8c;
+    --color-code-number: #bd93f9;
+    --color-code-tag: #ff79c6;
+    --color-code-attribute: #50fa7b;
+
+    --color-primary-rgb: 52, 152, 219;
+    --color-primary-light-rgb: 93, 173, 226;
+    --color-primary-dark-rgb: 41, 128, 185;
+    --color-secondary-rgb: 46, 204, 113;
+    --color-secondary-light-rgb: 88, 214, 141;
+    --color-secondary-dark-rgb: 39, 174, 96;
+    --color-accent-rgb: 231, 76, 60;
+    --color-accent-light-rgb: 236, 112, 99;
+    --color-accent-dark-rgb: 192, 57, 43;
+    --color-background-rgb: 18, 18, 18;
+    --color-surface-rgb: 30, 30, 30;
+    --color-card-rgb: 42, 42, 42;
+    --color-text-primary-rgb: 255, 255, 255;
+    --color-text-secondary-rgb: 204, 204, 204;
+    --color-text-tertiary-rgb: 153, 153, 153;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    // Instead of extending, copy the light theme variables directly
+    --color-primary: #3498db;
+    --color-primary-light: #5dade2;
+    --color-primary-dark: #2980b9;
+    --color-secondary: #2ecc71;
+    --color-secondary-light: #58d68d;
+    --color-secondary-dark: #27ae60;
+    --color-accent: #e74c3c;
+    --color-accent-light: #ec7063;
+    --color-accent-dark: #c0392b;
+
+    --color-background: #f8f9fa;
+    --color-surface: #ffffff;
+    --color-card: #ffffff;
+    --color-border: #e0e0e0;
+    --color-divider: #e0e0e0;
+
+    --color-text-primary: #212529;
+    --color-text-secondary: #495057;
+    --color-text-tertiary: #6c757d;
+    --color-text-disabled: #adb5bd;
+    --color-text-inverse: #ffffff;
+
+    --color-code-background: #f5f5f5;
+    --color-code-text: #333333;
+    --color-code-comment: #8e908c;
+    --color-code-keyword: #8959a8;
+    --color-code-function: #4271ae;
+    --color-code-string: #718c00;
+    --color-code-number: #f5871f;
+    --color-code-tag: #c82829;
+    --color-code-attribute: #eab700;
+
+    --color-primary-rgb: 52, 152, 219;
+    --color-primary-light-rgb: 93, 173, 226;
+    --color-primary-dark-rgb: 41, 128, 185;
+    --color-secondary-rgb: 46, 204, 113;
+    --color-secondary-light-rgb: 88, 214, 141;
+    --color-secondary-dark-rgb: 39, 174, 96;
+    --color-accent-rgb: 231, 76, 60;
+    --color-accent-light-rgb: 236, 112, 99;
+    --color-accent-dark-rgb: 192, 57, 43;
+    --color-background-rgb: 248, 249, 250;
+    --color-surface-rgb: 255, 255, 255;
+    --color-card-rgb: 255, 255, 255;
+    --color-text-primary-rgb: 33, 37, 41;
+    --color-text-secondary-rgb: 73, 80, 87;
+    --color-text-tertiary-rgb: 108, 117, 125;
+  }
+}

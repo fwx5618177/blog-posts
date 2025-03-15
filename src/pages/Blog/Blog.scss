@@ -1,0 +1,6 @@
+@use "../../styles/mixins" as mixins;
+
+.blog-page {
+  width: 100%;
+  padding: var(--spacing-6) 0;
+}

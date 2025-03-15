@@ -1,0 +1,212 @@
+@use "../../styles/mixins" as mixins;
+
+.theme-toggle-container {
+  position: relative;
+}
+
+.theme-toggle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--border-radius-full);
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  border: var(--border-width-thin) solid var(--color-border);
+  transition: all var(--transition-normal) var(--transition-timing-function);
+
+  &:hover {
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
+  }
+
+  &:focus-visible {
+    @include mixins.focus-ring;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.theme-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 240px;
+  background-color: var(--color-card);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-4);
+  z-index: var(--z-index-dropdown);
+  animation: scaleIn 0.2s var(--transition-timing-function);
+  transform-origin: top right;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    right: 16px;
+    width: 12px;
+    height: 12px;
+    background-color: var(--color-card);
+    transform: rotate(45deg);
+    border-top: var(--border-width-thin) solid var(--color-border);
+    border-left: var(--border-width-thin) solid var(--color-border);
+  }
+
+  @include mixins.mobile {
+    right: -80px;
+
+    &::before {
+      right: 96px;
+    }
+  }
+}
+
+.theme-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-4);
+  padding-bottom: var(--spacing-4);
+  border-bottom: var(--border-width-thin) solid var(--color-border);
+
+  .theme-option {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--border-radius-full);
+    border: var(--border-width-thin) solid var(--color-border);
+    cursor: pointer;
+    transition: all var(--transition-fast) var(--transition-timing-function);
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &.active {
+      border: var(--border-width-medium) solid var(--color-primary);
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 16px;
+        height: 16px;
+        background-color: var(--color-primary);
+        border-radius: 50%;
+      }
+    }
+
+    &.light-theme {
+      background-color: #ffffff;
+      border-color: #e0e0e0;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background-color: #f8f9fa;
+      }
+    }
+
+    &.dark-theme {
+      background-color: #121212;
+      border-color: #444444;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background-color: #1e1e1e;
+      }
+    }
+
+    &.sepia-theme {
+      background-color: #f8f4e5;
+      border-color: #d3c6a6;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background-color: #f1ead9;
+      }
+    }
+
+    &.high-contrast-theme {
+      background-color: #ffffff;
+      border-color: #000000;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background-color: #f0f0f0;
+      }
+    }
+
+    &.dark-high-contrast-theme {
+      background-color: #000000;
+      border-color: #ffffff;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background-color: #0f0f0f;
+      }
+    }
+  }
+}
+
+.theme-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+
+  .theme-list-item {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--border-radius-md);
+    background-color: transparent;
+    color: var(--color-text-primary);
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-fast) var(--transition-timing-function);
+    text-align: left;
+    font-size: var(--font-size-sm);
+
+    &:hover {
+      background-color: rgba(var(--color-primary-rgb), 0.1);
+    }
+
+    &.active {
+      background-color: var(--color-primary);
+      color: var(--color-text-inverse);
+    }
+  }
+}

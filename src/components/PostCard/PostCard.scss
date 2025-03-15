@@ -1,0 +1,214 @@
+@use "../../styles/mixins" as mixins;
+
+.post-card {
+  @include mixins.card;
+
+  & {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    transition: all var(--transition-normal) var(--transition-timing-function);
+  }
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+
+    .post-card-image {
+      transform: scale(1.05);
+    }
+  }
+
+  .post-card-image-link {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
+      z-index: 1;
+    }
+  }
+
+  .post-card-image {
+    width: 100%;
+    height: 220px;
+    background-size: cover;
+    background-position: center;
+    transition: transform var(--transition-normal) var(--transition-timing-function);
+  }
+
+  .post-card-featured {
+    position: absolute;
+    top: var(--spacing-3);
+    left: var(--spacing-3);
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    padding: var(--spacing-1) var(--spacing-2);
+    border-radius: var(--border-radius-md);
+    z-index: 2;
+  }
+
+  .post-card-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: var(--spacing-5);
+  }
+
+  .post-card-header {
+    margin-bottom: var(--spacing-4);
+  }
+
+  .post-card-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-2);
+
+    .post-card-category {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-primary);
+      text-decoration: none;
+      padding: var(--spacing-1) var(--spacing-2);
+      background-color: rgba(var(--color-primary-rgb), 0.1);
+      border-radius: var(--border-radius-md);
+      transition: all var(--transition-fast) var(--transition-timing-function);
+
+      &:hover {
+        background-color: var(--color-primary);
+        color: var(--color-text-inverse);
+      }
+    }
+  }
+
+  .post-card-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    margin: 0;
+
+    a {
+      color: var(--color-text-primary);
+      text-decoration: none;
+      transition: color var(--transition-fast) var(--transition-timing-function);
+
+      &:hover {
+        color: var(--color-primary);
+      }
+    }
+  }
+
+  .post-card-excerpt {
+    margin-bottom: var(--spacing-4);
+    flex-grow: 1;
+
+    p {
+      font-size: var(--font-size-md);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-secondary);
+      margin: 0;
+      @include mixins.truncate(3);
+    }
+  }
+
+  .post-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+
+    .post-card-author {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+
+      .post-card-author-image {
+        width: 32px;
+        height: 32px;
+        border-radius: var(--border-radius-full);
+        object-fit: cover;
+      }
+
+      .post-card-author-name {
+        font-weight: var(--font-weight-medium);
+        color: var(--color-text-secondary);
+      }
+    }
+
+    .post-card-meta-right {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+
+      .post-card-date,
+      .post-card-reading-time {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-1);
+
+        &::before {
+          content: "•";
+          display: inline-block;
+          margin-right: var(--spacing-1);
+        }
+      }
+    }
+  }
+}
+
+// Featured post card variant
+.post-card-featured {
+  grid-column: span 2;
+
+  .post-card-image {
+    height: 320px;
+  }
+
+  .post-card-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  @include mixins.mobile {
+    grid-column: span 1;
+
+    .post-card-image {
+      height: 240px;
+    }
+
+    .post-card-title {
+      font-size: var(--font-size-xl);
+    }
+  }
+}
+
+// Compact post card variant
+.post-card-compact {
+  .post-card-image {
+    height: 160px;
+  }
+
+  .post-card-content {
+    padding: var(--spacing-4);
+  }
+
+  .post-card-title {
+    font-size: var(--font-size-lg);
+  }
+
+  .post-card-meta {
+    margin-top: var(--spacing-2);
+  }
+}

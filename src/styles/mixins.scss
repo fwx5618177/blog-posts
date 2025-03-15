@@ -1,0 +1,454 @@
+// Responsive Breakpoints
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: 575.98px) {
+      @content;
+    }
+  } @else if $breakpoint == sm {
+    @media (min-width: 576px) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (min-width: 768px) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (min-width: 992px) {
+      @content;
+    }
+  } @else if $breakpoint == xl {
+    @media (min-width: 1200px) {
+      @content;
+    }
+  } @else if $breakpoint == xxl {
+    @media (min-width: 1400px) {
+      @content;
+    }
+  }
+}
+
+// Mobile First Approach
+@mixin mobile {
+  @media (max-width: 575.98px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: 576px) and (max-width: 991.98px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 992px) {
+    @content;
+  }
+}
+
+// Fluid Typography
+@mixin fluid-type(
+  $min-font-size,
+  $max-font-size,
+  $min-viewport-width: 320px,
+  $max-viewport-width: 1200px
+) {
+  font-size: clamp(
+    #{$min-font-size},
+    #{$min-font-size} + (#{strip-unit($max-font-size)} - #{strip-unit($min-font-size)}) *
+      (
+        (100vw - #{$min-viewport-width}) /
+          (#{strip-unit($max-viewport-width)} - #{strip-unit($min-viewport-width)})
+      ),
+    #{$max-font-size}
+  );
+}
+
+// Fluid Spacing
+@mixin fluid-spacing(
+  $property,
+  $min-size,
+  $max-size,
+  $min-viewport-width: 320px,
+  $max-viewport-width: 1200px
+) {
+  #{$property}: clamp(
+    #{$min-size},
+    #{$min-size} + (#{strip-unit($max-size)} - #{strip-unit($min-size)}) *
+      (
+        (100vw - #{$min-viewport-width}) /
+          (#{strip-unit($max-viewport-width)} - #{strip-unit($min-viewport-width)})
+      ),
+    #{$max-size}
+  );
+}
+
+// Helper function to strip units
+@function strip-unit($value) {
+  @return $value / ($value * 0 + 1);
+}
+
+// Flexbox Mixins
+@mixin flex {
+  display: flex;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-around {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+@mixin flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+// Grid Mixins
+@mixin grid($columns: 1, $gap: var(--spacing-4)) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+@mixin grid-responsive($mobile-cols: 1, $tablet-cols: 2, $desktop-cols: 3, $gap: var(--spacing-4)) {
+  display: grid;
+  gap: $gap;
+
+  grid-template-columns: repeat($mobile-cols, 1fr);
+
+  @include tablet {
+    grid-template-columns: repeat($tablet-cols, 1fr);
+  }
+
+  @include desktop {
+    grid-template-columns: repeat($desktop-cols, 1fr);
+  }
+}
+
+// Card Mixin
+@mixin card {
+  background-color: var(--color-card);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-5);
+  transition:
+    transform var(--transition-normal) var(--transition-timing-function),
+    box-shadow var(--transition-normal) var(--transition-timing-function);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+
+  @include mobile {
+    padding: var(--spacing-4);
+  }
+}
+
+// Button Mixins
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-2) var(--spacing-4);
+  border-radius: var(--border-radius-md);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast) var(--transition-timing-function);
+  border: none;
+  text-decoration: none;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-primary {
+  @include button-base;
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-primary-dark);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background-color: var(--color-secondary);
+  color: var(--color-text-inverse);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-secondary-dark);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+}
+
+@mixin button-outline {
+  @include button-base;
+  background-color: transparent;
+  color: var(--color-primary);
+  border: var(--border-width-thin) solid var(--color-primary);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+}
+
+@mixin button-ghost {
+  @include button-base;
+  background-color: transparent;
+  color: var(--color-text-primary);
+
+  &:hover:not(:disabled) {
+    background-color: rgba(var(--color-primary-rgb), 0.1);
+    color: var(--color-primary);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+}
+
+// Input Mixins
+@mixin input-base {
+  width: 100%;
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--border-radius-md);
+  border: var(--border-width-thin) solid var(--color-border);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  transition: all var(--transition-fast) var(--transition-timing-function);
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
+  }
+
+  &::placeholder {
+    color: var(--color-text-tertiary);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// Typography Mixins
+@mixin heading-1 {
+  font-size: clamp(var(--font-size-2xl), 5vw, var(--font-size-5xl));
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-4);
+}
+
+@mixin heading-2 {
+  font-size: clamp(var(--font-size-xl), 4vw, var(--font-size-4xl));
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-3);
+}
+
+@mixin heading-3 {
+  font-size: clamp(var(--font-size-lg), 3vw, var(--font-size-3xl));
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-3);
+}
+
+@mixin heading-4 {
+  font-size: clamp(var(--font-size-md), 2.5vw, var(--font-size-2xl));
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-2);
+}
+
+@mixin heading-5 {
+  font-size: clamp(var(--font-size-md), 2vw, var(--font-size-xl));
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-2);
+}
+
+@mixin heading-6 {
+  font-size: clamp(var(--font-size-sm), 1.5vw, var(--font-size-lg));
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-2);
+}
+
+// Text Truncation
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+// Focus Ring
+@mixin focus-ring {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.4);
+}
+
+// Theme Transition
+@mixin theme-transition {
+  transition:
+    background-color var(--transition-normal) var(--transition-timing-function),
+    color var(--transition-normal) var(--transition-timing-function),
+    border-color var(--transition-normal) var(--transition-timing-function),
+    box-shadow var(--transition-normal) var(--transition-timing-function);
+}
+
+// Aspect Ratio
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+
+  &::before {
+    content: "";
+    display: block;
+    padding-top: ($height / $width) * 100%;
+  }
+
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// Container
+@mixin container {
+  width: 100%;
+  max-width: clamp(var(--container-max-width-sm), 90vw, var(--container-max-width-xl));
+  margin-inline: auto;
+  padding-inline: var(--spacing-4);
+}
+
+// Responsive Font Size
+@mixin responsive-font-size($size-map) {
+  @each $breakpoint, $font-size in $size-map {
+    @if $breakpoint == "base" {
+      font-size: $font-size;
+    } @else {
+      @include respond-to($breakpoint) {
+        font-size: $font-size;
+      }
+    }
+  }
+}
+
+// Responsive Spacing
+@mixin responsive-spacing($property, $size-map) {
+  @each $breakpoint, $spacing in $size-map {
+    @if $breakpoint == "base" {
+      #{$property}: $spacing;
+    } @else {
+      @include respond-to($breakpoint) {
+        #{$property}: $spacing;
+      }
+    }
+  }
+}
+
+// Hover Effect
+@mixin hover-effect {
+  transition:
+    transform var(--transition-fast) var(--transition-timing-function),
+    box-shadow var(--transition-fast) var(--transition-timing-function);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+// Dark Mode Styles
+@mixin dark-mode {
+  [data-theme="dark"] & {
+    @content;
+  }
+}
+
+// Light Mode Styles
+@mixin light-mode {
+  [data-theme="light"] & {
+    @content;
+  }
+}
+
+// Custom Theme Styles
+@mixin custom-theme($theme) {
+  [data-theme="#{$theme}"] & {
+    @content;
+  }
+}
+
+// Add the fade-in mixin
+@mixin fade-in {
+  animation: fadeIn 0.5s ease-in-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
