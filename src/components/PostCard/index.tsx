@@ -15,7 +15,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, variant = 'default' }) => {
 
   return (
     <article className={`post-card post-card-${variant}`}>
-      {post.coverImage && (
+      {post.coverImage ? (
         <Link to={`/blog/${post.slug}`} className="post-card-image-link">
           <div
             className="post-card-image"
@@ -23,7 +23,30 @@ const PostCard: React.FC<PostCardProps> = ({ post, variant = 'default' }) => {
             aria-label={post.title}
           ></div>
           {post.featured && variant !== 'compact' && (
-            <span className="post-card-featured">Featured</span>
+            <span className="post-card-featured-badge">Featured</span>
+          )}
+        </Link>
+      ) : (
+        <Link to={`/blog/${post.slug}`} className="post-card-image-link">
+          <div className="post-card-image post-card-image-placeholder" aria-label={post.title}>
+            <span className="post-card-image-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+            </span>
+          </div>
+          {post.featured && variant !== 'compact' && (
+            <span className="post-card-featured-badge">Featured</span>
           )}
         </Link>
       )}
@@ -68,10 +91,52 @@ const PostCard: React.FC<PostCardProps> = ({ post, variant = 'default' }) => {
           </div>
 
           <div className="post-card-meta-right">
-            <span className="post-card-date">{formatDate(post.publishedAt)}</span>
-            <span className="post-card-reading-time">{post.readingTime} min read</span>
+            <span className="post-card-date">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="post-card-icon"
+              >
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              {formatDate(post.publishedAt)}
+            </span>
+            <span className="post-card-reading-time">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="post-card-icon"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              {post.readingTime} min read
+            </span>
           </div>
         </footer>
+
+        {post.tags && post.tags.length > 0 && (
+          <div className="post-card-tags">
+            {post.tags.map(tag => (
+              <Link key={tag.id} to={`/tags/${tag.slug}`} className="post-card-tag">
+                #{tag.name}
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </article>
   );

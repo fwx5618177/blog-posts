@@ -2,5 +2,119 @@
 
 .blog-page {
   width: 100%;
-  padding: var(--spacing-6) 0;
+  padding-bottom: var(--spacing-10);
+}
+
+// Blog header section
+.blog-header {
+  background-color: var(--color-surface);
+  padding: var(--fluid-space-8) 0 var(--fluid-space-6);
+  margin-bottom: var(--spacing-8);
+  border-bottom: var(--border-width-thin) solid var(--color-border);
+
+  .blog-title {
+    @include mixins.heading-1;
+    margin-bottom: var(--spacing-3);
+  }
+
+  .blog-description {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+    max-width: 800px;
+    margin-bottom: var(--spacing-6);
+  }
+
+  .blog-filters {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+
+    @include mixins.tablet-up {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .search-filter {
+    flex: 1;
+    max-width: 400px;
+
+    .search-input {
+      @include mixins.input-base;
+      width: 100%;
+      height: 48px;
+      padding: 0 var(--spacing-4);
+    }
+  }
+
+  .category-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+
+    .category-btn {
+      padding: var(--spacing-2) var(--spacing-4);
+      border-radius: var(--border-radius-md);
+      background-color: var(--color-background);
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      border: var(--border-width-thin) solid var(--color-border);
+      cursor: pointer;
+      transition: all var(--transition-fast) var(--transition-timing-function);
+
+      &:hover {
+        background-color: var(--color-background-secondary);
+        color: var(--color-text-primary);
+      }
+
+      &.active {
+        background-color: var(--color-primary);
+        color: var(--color-text-inverse);
+        border-color: var(--color-primary);
+      }
+    }
+  }
+}
+
+// Blog content section
+.blog-content {
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: var(--spacing-6);
+
+    @include mixins.tablet {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include mixins.desktop {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .no-posts {
+    text-align: center;
+    padding: var(--spacing-10) 0;
+    background-color: var(--color-card);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+
+    h3 {
+      @include mixins.heading-3;
+      margin-bottom: var(--spacing-3);
+    }
+
+    p {
+      color: var(--color-text-secondary);
+      margin-bottom: var(--spacing-6);
+    }
+
+    .reset-btn {
+      @include mixins.button-primary;
+      padding: var(--spacing-2) var(--spacing-6);
+    }
+  }
 }

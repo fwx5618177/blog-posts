@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Logo from '../Icons/Logo';
 import './Footer.scss';
 
 interface FooterProps {
@@ -20,20 +21,70 @@ const Footer: React.FC<FooterProps> = ({ siteTitle = 'FWX Blog' }) => {
 
   return (
     <footer className="footer">
-      <div className="container">
-        <div className="footer-content">
-          <div className="footer-main">
+      <div className="footer-main">
+        <div className="container">
+          <div className="footer-content">
             <div className="footer-brand">
               <Link to="/" className="footer-logo">
-                {siteTitle}
+                <Logo className="logo-svg" variant="full" width={40} height={30} />
               </Link>
               <p className="footer-tagline">
-                A personal blog about coding, design, and everything in between.
+                Personal blog about technology, programming, and web development.
               </p>
+
+              <div className="footer-contact-info">
+                <div className="contact-item">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="icon"
+                  >
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  <span>123 Business Avenue, Tech City, CA 94107</span>
+                </div>
+                <div className="contact-item">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="icon"
+                  >
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                  <a href="mailto:contact@fwxblog.com">contact@fwxblog.com</a>
+                </div>
+                <div className="contact-item">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="icon"
+                  >
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                  <a href="tel:+1234567890">+1 (234) 567-890</a>
+                </div>
+              </div>
 
               <div className="social-links">
                 <a
-                  href="https://github.com"
+                  href="https://github.com/fwxblog"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="social-link"
@@ -52,7 +103,7 @@ const Footer: React.FC<FooterProps> = ({ siteTitle = 'FWX Blog' }) => {
                   </svg>
                 </a>
                 <a
-                  href="https://twitter.com"
+                  href="https://twitter.com/fwxblog"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="social-link"
@@ -71,7 +122,7 @@ const Footer: React.FC<FooterProps> = ({ siteTitle = 'FWX Blog' }) => {
                   </svg>
                 </a>
                 <a
-                  href="https://linkedin.com"
+                  href="https://linkedin.com/company/fwxblog"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="social-link"
@@ -91,31 +142,27 @@ const Footer: React.FC<FooterProps> = ({ siteTitle = 'FWX Blog' }) => {
                     <circle cx="4" cy="4" r="2"></circle>
                   </svg>
                 </a>
-              </div>
-
-              <div className="footer-newsletter">
-                <h4 className="newsletter-heading">Subscribe to Newsletter</h4>
-                <p className="newsletter-description">
-                  Get the latest posts delivered right to your inbox.
-                </p>
-                {isSubscribed ? (
-                  <div className="newsletter-success">Thank you for subscribing!</div>
-                ) : (
-                  <form className="newsletter-form" onSubmit={handleSubmit}>
-                    <input
-                      type="email"
-                      className="newsletter-input"
-                      placeholder="Your email address"
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
-                      required
-                      aria-label="Email address"
-                    />
-                    <button type="submit" className="btn">
-                      Subscribe
-                    </button>
-                  </form>
-                )}
+                <a
+                  href="/rss.xml"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-link"
+                  aria-label="RSS Feed"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M4 11a9 9 0 0 1 9 9"></path>
+                    <path d="M4 4a16 16 0 0 1 16 16"></path>
+                    <circle cx="5" cy="19" r="1"></circle>
+                  </svg>
+                </a>
               </div>
             </div>
 
@@ -130,34 +177,13 @@ const Footer: React.FC<FooterProps> = ({ siteTitle = 'FWX Blog' }) => {
                     <Link to="/blog">Blog</Link>
                   </li>
                   <li>
-                    <Link to="/categories">Categories</Link>
-                  </li>
-                  <li>
-                    <Link to="/tags">Tags</Link>
+                    <Link to="/archive">Archive</Link>
                   </li>
                   <li>
                     <Link to="/about">About</Link>
                   </li>
-                </ul>
-              </div>
-
-              <div className="footer-nav-section">
-                <h4 className="footer-heading">Categories</h4>
-                <ul className="footer-links">
                   <li>
-                    <Link to="/categories/programming">Programming</Link>
-                  </li>
-                  <li>
-                    <Link to="/categories/design">Design</Link>
-                  </li>
-                  <li>
-                    <Link to="/categories/technology">Technology</Link>
-                  </li>
-                  <li>
-                    <Link to="/categories/tutorials">Tutorials</Link>
-                  </li>
-                  <li>
-                    <Link to="/categories/tools">Tools & Resources</Link>
+                    <Link to="/contact">Contact</Link>
                   </li>
                 </ul>
               </div>
@@ -166,32 +192,90 @@ const Footer: React.FC<FooterProps> = ({ siteTitle = 'FWX Blog' }) => {
                 <h4 className="footer-heading">Resources</h4>
                 <ul className="footer-links">
                   <li>
-                    <Link to="/resources/ebooks">Free E-Books</Link>
+                    <Link to="/code-block-demo">Code Blocks</Link>
                   </li>
                   <li>
-                    <Link to="/resources/templates">Templates</Link>
+                    <Link to="/message-demo">Message Demo</Link>
                   </li>
                   <li>
-                    <Link to="/resources/tools">Recommended Tools</Link>
+                    <a
+                      href="https://github.com/fwxblog/docs"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Documentation
+                    </a>
                   </li>
                   <li>
-                    <Link to="/resources/courses">Online Courses</Link>
+                    <Link to="/resources/guides">Guides</Link>
                   </li>
                   <li>
-                    <Link to="/resources/faq">FAQ</Link>
+                    <Link to="/resources/tutorials">Tutorials</Link>
                   </li>
                 </ul>
               </div>
             </div>
-          </div>
 
-          <div className="footer-bottom">
+            <div className="footer-newsletter">
+              <h4 className="newsletter-heading">Subscribe to My Newsletter</h4>
+              <p className="newsletter-description">
+                Get the latest blog posts, tutorials, and updates delivered to your inbox.
+              </p>
+              {isSubscribed ? (
+                <div className="newsletter-success">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="success-icon"
+                  >
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                  <span>Thank you for subscribing! Check your email for confirmation.</span>
+                </div>
+              ) : (
+                <form className="newsletter-form" onSubmit={handleSubmit}>
+                  <div className="form-group">
+                    <input
+                      type="email"
+                      className="newsletter-input"
+                      placeholder="Your email address"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                      required
+                      aria-label="Email address"
+                    />
+                    <button type="submit" className="btn btn-primary">
+                      Subscribe
+                    </button>
+                  </div>
+                  <div className="form-privacy">
+                    By subscribing, you agree to our <Link to="/privacy">Privacy Policy</Link> and{' '}
+                    <Link to="/terms">Terms of Service</Link>.
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="footer-bottom">
+        <div className="container">
+          <div className="footer-bottom-content">
             <div className="copyright">
               &copy; {currentYear} {siteTitle}. All rights reserved.
             </div>
             <div className="footer-meta-links">
               <Link to="/privacy">Privacy Policy</Link>
               <Link to="/terms">Terms of Service</Link>
+              <Link to="/cookies">Cookie Policy</Link>
+              <Link to="/accessibility">Accessibility</Link>
               <Link to="/sitemap">Sitemap</Link>
             </div>
           </div>

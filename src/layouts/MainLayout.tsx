@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -45,34 +45,69 @@ const MOCK_RECENT_POSTS = [
   },
 ];
 
-const MainLayout: React.FC<LayoutProps> = ({ children, showSidebar = true, showFooter = true }) => {
-  const location = useLocation();
+// Mock table of contents for article pages
+const MOCK_TABLE_OF_CONTENTS = [
+  { id: 'introduction', title: 'Introduction', level: 1 },
+  { id: 'getting-started', title: 'Getting Started', level: 1 },
+  { id: 'installation', title: 'Installation', level: 2 },
+  { id: 'configuration', title: 'Configuration', level: 2 },
+  { id: 'basic-usage', title: 'Basic Usage', level: 1 },
+  { id: 'examples', title: 'Examples', level: 2 },
+  { id: 'advanced-techniques', title: 'Advanced Techniques', level: 1 },
+  { id: 'performance-optimization', title: 'Performance Optimization', level: 2 },
+  { id: 'best-practices', title: 'Best Practices', level: 2 },
+  { id: 'conclusion', title: 'Conclusion', level: 1 },
+];
 
-  // Scroll to top on page change
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location]);
+/**
+ * MainLayout - The primary layout component for the application
+ *
+ * This layout provides a consistent structure for all pages, including:
+ * - Header with navigation
+ * - Main content area with optional sidebar
+ * - Footer with site information
+ *
+ * The layout is designed to be responsive and adaptable for both blog and enterprise use cases.
+ */
+const MainLayout: React.FC<LayoutProps> = ({
+  children,
+  showSidebar = true,
+  showFooter = true,
+  contentWidth = 'standard', // 'standard', 'wide', or 'full'
+}) => {
+  const location = useLocation();
+  const content = children || <Outlet />;
+  const isArticlePage = location.pathname.includes('/blog/') && location.pathname !== '/blog/';
 
   return (
     <div className="layout">
+      {/* Fixed header */}
       <Header />
 
+      {/* Header spacer to prevent content from being hidden under fixed header */}
       <div className="layout-spacer"></div>
 
-      <main className={`main-content ${showSidebar ? 'with-sidebar' : ''}`}>
-        <div className="content-container">{children || <Outlet />}</div>
+      {/* Main content area */}
+      <div className={`layout-container ${contentWidth}`}>
+        <main className={`main-content ${showSidebar ? 'with-sidebar' : ''}`}>
+          {/* Primary content area */}
+          <div className="content-container">{content}</div>
 
-        {showSidebar && (
-          <div className="sidebar-container">
-            <Sidebar
-              categories={MOCK_CATEGORIES}
-              tags={MOCK_TAGS}
-              recentPosts={MOCK_RECENT_POSTS}
-            />
-          </div>
-        )}
-      </main>
+          {/* Optional sidebar */}
+          {showSidebar && (
+            <aside className="sidebar-container">
+              <Sidebar
+                categories={MOCK_CATEGORIES}
+                tags={MOCK_TAGS}
+                recentPosts={MOCK_RECENT_POSTS}
+                tableOfContents={isArticlePage ? MOCK_TABLE_OF_CONTENTS : []}
+              />
+            </aside>
+          )}
+        </main>
+      </div>
 
+      {/* Footer */}
       {showFooter && <Footer />}
     </div>
   );

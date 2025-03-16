@@ -106,6 +106,7 @@ export interface LayoutProps {
   children?: React.ReactNode;
   showSidebar?: boolean;
   showFooter?: boolean;
+  contentWidth?: 'standard' | 'wide' | 'full';
 }
 
 // SEO Types
