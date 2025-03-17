@@ -32,6 +32,23 @@
   }
 }
 
+// 遮罩层
+.theme-overlay {
+  display: none;
+
+  @include mixins.mobile {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: var(--z-index-overlay);
+    animation: fadeIn 0.2s var(--transition-timing-function);
+  }
+}
+
 .theme-dropdown {
   position: absolute;
   top: calc(100% + 8px);
@@ -44,6 +61,7 @@
   z-index: var(--z-index-dropdown);
   animation: scaleIn 0.2s var(--transition-timing-function);
   transform-origin: top right;
+  border: var(--border-width-thin) solid var(--color-border);
 
   &::before {
     content: "";
@@ -59,11 +77,91 @@
   }
 
   @include mixins.mobile {
-    right: -80px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    max-width: 300px;
+    animation: fadeIn 0.2s var(--transition-timing-function);
+    transform-origin: center;
 
     &::before {
-      right: 96px;
+      display: none;
     }
+  }
+}
+
+// 弹窗标题
+.theme-dropdown-header {
+  display: none;
+
+  @include mixins.mobile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-4);
+    padding-bottom: var(--spacing-3);
+    border-bottom: var(--border-width-thin) solid var(--color-border);
+
+    h3 {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      margin: 0;
+    }
+  }
+}
+
+// 关闭按钮
+.theme-close-button {
+  display: none;
+
+  @include mixins.mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--border-radius-full);
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    border: var(--border-width-thin) solid var(--color-border);
+    cursor: pointer;
+    transition: all var(--transition-fast) var(--transition-timing-function);
+
+    &:hover {
+      background-color: var(--color-primary);
+      color: var(--color-text-inverse);
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -75,6 +173,10 @@
   padding-bottom: var(--spacing-4);
   border-bottom: var(--border-width-thin) solid var(--color-border);
 
+  @include mixins.mobile {
+    justify-content: center;
+  }
+
   .theme-option {
     width: 40px;
     height: 40px;
@@ -84,6 +186,11 @@
     transition: all var(--transition-fast) var(--transition-timing-function);
     position: relative;
     overflow: hidden;
+
+    @include mixins.mobile {
+      width: 48px;
+      height: 48px;
+    }
 
     &:hover {
       transform: scale(1.1);
@@ -187,6 +294,10 @@
   flex-direction: column;
   gap: var(--spacing-1);
 
+  @include mixins.mobile {
+    gap: var(--spacing-2);
+  }
+
   .theme-list-item {
     display: flex;
     align-items: center;
@@ -199,6 +310,11 @@
     transition: all var(--transition-fast) var(--transition-timing-function);
     text-align: left;
     font-size: var(--font-size-sm);
+
+    @include mixins.mobile {
+      padding: var(--spacing-3) var(--spacing-4);
+      font-size: var(--font-size-md);
+    }
 
     &:hover {
       background-color: rgba(var(--color-primary-rgb), 0.1);

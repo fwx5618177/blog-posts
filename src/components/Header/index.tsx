@@ -13,7 +13,9 @@ interface HeaderProps {
 const navigationItems = [
   { path: '/', label: 'Home', exact: true },
   { path: '/blog', label: 'Blog', exact: false },
-  { path: '/archive', label: 'Archive', exact: false },
+  { path: '/categories', label: 'Categories', exact: false },
+  { path: '/tags', label: 'Tags', exact: false },
+  { path: '/archives', label: 'Archives', exact: false },
 ];
 
 const Header: React.FC<HeaderProps> = ({ siteTitle = 'FWX Blog' }) => {

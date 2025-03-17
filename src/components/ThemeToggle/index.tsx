@@ -21,6 +21,19 @@ const ThemeToggle: React.FC = () => {
     };
   }, []);
 
+  // Prevent body scrolling when dropdown is open on mobile
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   // Get theme icon based on current theme
   const getThemeIcon = () => {
     switch (theme) {
@@ -161,38 +174,62 @@ const ThemeToggle: React.FC = () => {
       </button>
 
       {isOpen && (
-        <div className="theme-dropdown">
-          <div className="theme-selector">
-            {availableThemes.map(themeOption => (
+        <>
+          <div className="theme-overlay" onClick={() => setIsOpen(false)}></div>
+          <div className="theme-dropdown">
+            <div className="theme-dropdown-header">
+              <h3>选择主题</h3>
               <button
-                key={themeOption}
-                className={`theme-option ${themeOption}-theme ${themeOption === theme ? 'active' : ''}`}
-                onClick={() => {
-                  setTheme(themeOption);
-                  setIsOpen(false);
-                }}
-                aria-label={`Switch to ${getThemeName(themeOption)} theme`}
-                aria-current={themeOption === theme}
-              />
-            ))}
-          </div>
-          <div className="theme-list">
-            {availableThemes.map(themeOption => (
-              <button
-                key={themeOption}
-                className={`theme-list-item ${themeOption === theme ? 'active' : ''}`}
-                onClick={() => {
-                  setTheme(themeOption);
-                  setIsOpen(false);
-                }}
-                aria-label={`Switch to ${getThemeName(themeOption)} theme`}
-                aria-current={themeOption === theme}
+                className="theme-close-button"
+                onClick={() => setIsOpen(false)}
+                aria-label="关闭主题选择"
               >
-                {getThemeName(themeOption)}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
               </button>
-            ))}
+            </div>
+            <div className="theme-selector">
+              {availableThemes.map(themeOption => (
+                <button
+                  key={themeOption}
+                  className={`theme-option ${themeOption}-theme ${themeOption === theme ? 'active' : ''}`}
+                  onClick={() => {
+                    setTheme(themeOption);
+                    setIsOpen(false);
+                  }}
+                  aria-label={`Switch to ${getThemeName(themeOption)} theme`}
+                  aria-current={themeOption === theme}
+                />
+              ))}
+            </div>
+            <div className="theme-list">
+              {availableThemes.map(themeOption => (
+                <button
+                  key={themeOption}
+                  className={`theme-list-item ${themeOption === theme ? 'active' : ''}`}
+                  onClick={() => {
+                    setTheme(themeOption);
+                    setIsOpen(false);
+                  }}
+                  aria-label={`Switch to ${getThemeName(themeOption)} theme`}
+                  aria-current={themeOption === theme}
+                >
+                  {getThemeName(themeOption)}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

@@ -18,7 +18,8 @@ const FEATURED_POSTS: Post[] = [
     author: {
       id: '1',
       name: 'Jane Doe',
-      avatar: 'https://i.pravatar.cc/150?img=1',
+      avatar:
+        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
     },
     categories: [{ id: '1', name: 'React', slug: 'react' }],
     tags: [
@@ -28,7 +29,8 @@ const FEATURED_POSTS: Post[] = [
     readingTime: 5,
     featured: true,
     status: 'published',
-    coverImage: 'https://via.placeholder.com/800x450?text=React+TypeScript',
+    coverImage:
+      'https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
   },
   {
     id: '2',
@@ -41,7 +43,8 @@ const FEATURED_POSTS: Post[] = [
     author: {
       id: '1',
       name: 'Jane Doe',
-      avatar: 'https://i.pravatar.cc/150?img=1',
+      avatar:
+        'https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
     },
     categories: [{ id: '2', name: 'CSS', slug: 'css' }],
     tags: [
@@ -51,7 +54,8 @@ const FEATURED_POSTS: Post[] = [
     readingTime: 8,
     featured: true,
     status: 'published',
-    coverImage: 'https://via.placeholder.com/800x450?text=CSS+Techniques',
+    coverImage:
+      'https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
   },
 ];
 
@@ -67,7 +71,8 @@ const RECENT_POSTS: Post[] = [
     author: {
       id: '1',
       name: 'Jane Doe',
-      avatar: 'https://i.pravatar.cc/150?img=1',
+      avatar:
+        'https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
     },
     categories: [{ id: '3', name: 'Node.js', slug: 'nodejs' }],
     tags: [
@@ -76,7 +81,8 @@ const RECENT_POSTS: Post[] = [
     ],
     readingTime: 10,
     status: 'published',
-    coverImage: 'https://via.placeholder.com/800x450?text=Node.js+API',
+    coverImage:
+      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
   },
   {
     id: '4',
@@ -89,7 +95,8 @@ const RECENT_POSTS: Post[] = [
     author: {
       id: '1',
       name: 'Jane Doe',
-      avatar: 'https://i.pravatar.cc/150?img=1',
+      avatar:
+        'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
     },
     categories: [{ id: '1', name: 'React', slug: 'react' }],
     tags: [
@@ -98,7 +105,8 @@ const RECENT_POSTS: Post[] = [
     ],
     readingTime: 7,
     status: 'published',
-    coverImage: 'https://via.placeholder.com/800x450?text=Redux+State',
+    coverImage:
+      'https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
   },
   {
     id: '5',
@@ -111,7 +119,8 @@ const RECENT_POSTS: Post[] = [
     author: {
       id: '1',
       name: 'Jane Doe',
-      avatar: 'https://i.pravatar.cc/150?img=1',
+      avatar:
+        'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
     },
     categories: [{ id: '4', name: 'Performance', slug: 'performance' }],
     tags: [
@@ -120,7 +129,8 @@ const RECENT_POSTS: Post[] = [
     ],
     readingTime: 12,
     status: 'published',
-    coverImage: 'https://via.placeholder.com/800x450?text=Web+Performance',
+    coverImage:
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2015&q=80',
   },
   {
     id: '6',
@@ -133,7 +143,8 @@ const RECENT_POSTS: Post[] = [
     author: {
       id: '1',
       name: 'Jane Doe',
-      avatar: 'https://i.pravatar.cc/150?img=1',
+      avatar:
+        'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
     },
     categories: [{ id: '5', name: 'Accessibility', slug: 'accessibility' }],
     tags: [
@@ -142,7 +153,8 @@ const RECENT_POSTS: Post[] = [
     ],
     readingTime: 9,
     status: 'published',
-    coverImage: 'https://via.placeholder.com/800x450?text=Web+Accessibility',
+    coverImage:
+      'https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80',
   },
   {
     id: '7',
@@ -155,7 +167,8 @@ const RECENT_POSTS: Post[] = [
     author: {
       id: '1',
       name: 'Jane Doe',
-      avatar: 'https://i.pravatar.cc/150?img=1',
+      avatar:
+        'https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
     },
     categories: [{ id: '7', name: 'DevOps', slug: 'devops' }],
     tags: [
@@ -164,7 +177,8 @@ const RECENT_POSTS: Post[] = [
     ],
     readingTime: 8,
     status: 'published',
-    coverImage: 'https://via.placeholder.com/800x450?text=Git+Workflows',
+    coverImage:
+      'https://images.unsplash.com/photo-1556075798-4825dfaaf498?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80',
   },
   {
     id: '8',
@@ -177,7 +191,8 @@ const RECENT_POSTS: Post[] = [
     author: {
       id: '1',
       name: 'Jane Doe',
-      avatar: 'https://i.pravatar.cc/150?img=1',
+      avatar:
+        'https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
     },
     categories: [{ id: '8', name: 'Architecture', slug: 'architecture' }],
     tags: [
@@ -186,7 +201,8 @@ const RECENT_POSTS: Post[] = [
     ],
     readingTime: 11,
     status: 'published',
-    coverImage: 'https://via.placeholder.com/800x450?text=Microservices+Architecture',
+    coverImage:
+      'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2068&q=80',
   },
   {
     id: '9',
@@ -199,7 +215,8 @@ const RECENT_POSTS: Post[] = [
     author: {
       id: '1',
       name: 'Jane Doe',
-      avatar: 'https://i.pravatar.cc/150?img=1',
+      avatar:
+        'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
     },
     categories: [{ id: '9', name: 'API Design', slug: 'api-design' }],
     tags: [
@@ -208,7 +225,8 @@ const RECENT_POSTS: Post[] = [
     ],
     readingTime: 9,
     status: 'published',
-    coverImage: 'https://via.placeholder.com/800x450?text=GraphQL+vs+REST',
+    coverImage:
+      'https://images.unsplash.com/photo-1623282033815-40b05d96c903?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
   },
 ];
 

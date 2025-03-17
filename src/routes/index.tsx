@@ -7,14 +7,20 @@ import ServerErrorPage from '../pages/ServerErrorPage';
 import MaintenancePage from '../pages/MaintenancePage';
 import MessageDemoPage from '../pages/MessageDemo';
 import CodeBlockDemoPage from '../pages/CodeBlockDemo';
+import ErrorTestPage from '../pages/ErrorTest';
 import { lazy, Suspense } from 'react';
 import Loading from '../components/Loading';
 
 // Lazy-loaded pages
 const BlogPage = lazy(() => import('../pages/Blog'));
+const BlogDetailPage = lazy(() => import('../pages/Blog/BlogDetail'));
 const CategoriesPage = lazy(() => import('../pages/Categories'));
+const CategoryDetailPage = lazy(() => import('../pages/Categories/CategoryDetail'));
 const TagsPage = lazy(() => import('../pages/Tags'));
+const TagDetailPage = lazy(() => import('../pages/Tags/TagDetail'));
 const AboutPage = lazy(() => import('../pages/About'));
+const ArchivesPage = lazy(() => import('../pages/Archives'));
+const ArchiveDetailPage = lazy(() => import('../pages/Archives/ArchiveDetail'));
 
 // Define routes
 const routes: RouteObject[] = [
@@ -36,6 +42,14 @@ const routes: RouteObject[] = [
         ),
       },
       {
+        path: 'blog/:slug',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <BlogDetailPage />
+          </Suspense>
+        ),
+      },
+      {
         path: 'categories',
         element: (
           <Suspense fallback={<Loading />}>
@@ -44,10 +58,42 @@ const routes: RouteObject[] = [
         ),
       },
       {
+        path: 'categories/:slug',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <CategoryDetailPage />
+          </Suspense>
+        ),
+      },
+      {
         path: 'tags',
         element: (
           <Suspense fallback={<Loading />}>
             <TagsPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'tags/:slug',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <TagDetailPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'archives',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ArchivesPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'archives/:year',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ArchiveDetailPage />
           </Suspense>
         ),
       },
@@ -76,12 +122,20 @@ const routes: RouteObject[] = [
         element: <NotFoundPage />,
       },
       {
+        path: '500',
+        element: <ErrorPage />,
+      },
+      {
         path: 'loading',
         element: <Loading />,
       },
       {
         path: 'maintenance',
         element: <MaintenancePage />,
+      },
+      {
+        path: 'error-test',
+        element: <ErrorTestPage />,
       },
       {
         path: '*',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -59,6 +59,14 @@ const MOCK_TABLE_OF_CONTENTS = [
   { id: 'conclusion', title: 'Conclusion', level: 1 },
 ];
 
+// Mock archive years
+const MOCK_ARCHIVE_YEARS = [
+  { year: '2023', count: 24 },
+  { year: '2022', count: 36 },
+  { year: '2021', count: 28 },
+  { year: '2020', count: 19 },
+];
+
 /**
  * MainLayout - The primary layout component for the application
  *
@@ -77,7 +85,69 @@ const MainLayout: React.FC<LayoutProps> = ({
 }) => {
   const location = useLocation();
   const content = children || <Outlet />;
-  const isArticlePage = location.pathname.includes('/blog/') && location.pathname !== '/blog/';
+
+  // 判断当前页面类型
+  const isBlogPage = location.pathname === '/blog' || location.pathname === '/blog/';
+  const isBlogDetailPage = location.pathname.includes('/blog/') && !isBlogPage;
+  const isArchiveListPage = location.pathname === '/archives' || location.pathname === '/archives/';
+  const isArchiveDetailPage = location.pathname.includes('/archives/') && !isArchiveListPage;
+  const isResourcesPage = location.pathname.includes('/resources');
+  const isCategoriesPage =
+    location.pathname === '/categories' || location.pathname === '/categories/';
+  const isCategoryDetailPage = location.pathname.includes('/categories/') && !isCategoriesPage;
+  const isTagsPage = location.pathname === '/tags' || location.pathname === '/tags/';
+  const isTagDetailPage = location.pathname.includes('/tags/') && !isTagsPage;
+
+  // 添加状态控制侧边栏在移动端的显示
+  const [showMobileSidebar, setShowMobileSidebar] = useState(false);
+
+  // 当路由变化时，自动隐藏移动端侧边栏
+  useEffect(() => {
+    setShowMobileSidebar(false);
+  }, [location.pathname]);
+
+  // 是否显示侧边栏（在指定页面显示）
+  const shouldShowSidebar =
+    showSidebar &&
+    (isBlogPage ||
+      isBlogDetailPage ||
+      isArchiveListPage ||
+      isArchiveDetailPage ||
+      isResourcesPage ||
+      isCategoriesPage ||
+      isCategoryDetailPage ||
+      isTagsPage ||
+      isTagDetailPage);
+
+  // 是否显示目录（只在博客详情页和资源详情页显示）
+  const shouldShowTableOfContents =
+    isBlogDetailPage ||
+    (isResourcesPage && location.pathname !== '/resources' && location.pathname !== '/resources/');
+
+  // 切换侧边栏显示状态
+  const toggleSidebar = () => {
+    setShowMobileSidebar(!showMobileSidebar);
+
+    // 当侧边栏显示时，禁止背景滚动
+    if (!showMobileSidebar) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  };
+
+  // 关闭侧边栏
+  const closeSidebar = () => {
+    setShowMobileSidebar(false);
+    document.body.style.overflow = '';
+  };
+
+  // 组件卸载时恢复滚动
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
 
   return (
     <div className="layout">
@@ -89,20 +159,74 @@ const MainLayout: React.FC<LayoutProps> = ({
 
       {/* Main content area */}
       <div className={`layout-container ${contentWidth}`}>
-        <main className={`main-content ${showSidebar ? 'with-sidebar' : ''}`}>
+        <main className={`main-content ${shouldShowSidebar ? 'with-sidebar' : ''}`}>
           {/* Primary content area */}
           <div className="content-container">{content}</div>
 
-          {/* Optional sidebar */}
-          {showSidebar && (
-            <aside className="sidebar-container">
-              <Sidebar
-                categories={MOCK_CATEGORIES}
-                tags={MOCK_TAGS}
-                recentPosts={MOCK_RECENT_POSTS}
-                tableOfContents={isArticlePage ? MOCK_TABLE_OF_CONTENTS : []}
-              />
-            </aside>
+          {/* Optional sidebar - 在指定页面显示 */}
+          {shouldShowSidebar && (
+            <>
+              {/* 背景遮罩，点击可关闭侧边栏 */}
+              <div
+                className={`sidebar-overlay ${showMobileSidebar ? 'show' : ''}`}
+                onClick={closeSidebar}
+              ></div>
+
+              {/* 移动端侧边栏切换按钮 */}
+              <button
+                className="sidebar-toggle"
+                onClick={toggleSidebar}
+                aria-label={showMobileSidebar ? '隐藏侧边栏' : '显示侧边栏'}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  {showMobileSidebar ? (
+                    <>
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </>
+                  ) : (
+                    <>
+                      <line x1="3" y1="12" x2="21" y2="12"></line>
+                      <line x1="3" y1="6" x2="21" y2="6"></line>
+                      <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </>
+                  )}
+                </svg>
+              </button>
+
+              <aside className={`sidebar-container ${showMobileSidebar ? 'show-mobile' : ''}`}>
+                <Sidebar
+                  categories={MOCK_CATEGORIES}
+                  tags={MOCK_TAGS}
+                  recentPosts={MOCK_RECENT_POSTS}
+                  tableOfContents={shouldShowTableOfContents ? MOCK_TABLE_OF_CONTENTS : []}
+                  archiveYears={MOCK_ARCHIVE_YEARS}
+                  currentPage={
+                    isBlogPage
+                      ? 'blog'
+                      : isBlogDetailPage
+                        ? 'blog-detail'
+                        : isArchiveListPage
+                          ? 'archive-list'
+                          : isArchiveDetailPage
+                            ? 'archive-detail'
+                            : isCategoriesPage || isCategoryDetailPage
+                              ? 'categories'
+                              : isTagsPage || isTagDetailPage
+                                ? 'tags'
+                                : 'resources'
+                  }
+                />
+              </aside>
+            </>
           )}
         </main>
       </div>

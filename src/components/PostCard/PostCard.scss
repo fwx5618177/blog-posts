@@ -1,5 +1,12 @@
 @use "../../styles/mixins" as mixins;
 
+// 添加中等屏幕尺寸的混合器
+@mixin medium-screen {
+  @media (min-width: 769px) and (max-width: 1200px) {
+    @content;
+  }
+}
+
 .post-card {
   @include mixins.card;
 
@@ -51,6 +58,14 @@
     background-size: cover;
     background-position: center;
     transition: transform var(--transition-normal) var(--transition-timing-function);
+
+    @include medium-screen {
+      height: 200px;
+    }
+
+    @include mixins.mobile {
+      height: 180px;
+    }
   }
 
   .post-card-image-placeholder {
@@ -91,10 +106,26 @@
     flex-grow: 1;
     padding: var(--spacing-5);
     background-color: var(--color-card);
+
+    @include medium-screen {
+      padding: var(--spacing-4);
+    }
+
+    @include mixins.mobile {
+      padding: var(--spacing-4);
+    }
   }
 
   .post-card-header {
     margin-bottom: var(--spacing-4);
+
+    @include medium-screen {
+      margin-bottom: var(--spacing-3);
+    }
+
+    @include mixins.mobile {
+      margin-bottom: var(--spacing-3);
+    }
   }
 
   .post-card-categories {
@@ -126,6 +157,20 @@
     line-height: var(--line-height-tight);
     margin: 0;
 
+    @include medium-screen {
+      font-size: var(--font-size-lg);
+
+      // 限制标题行数
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    @include mixins.mobile {
+      font-size: var(--font-size-lg);
+    }
+
     a {
       color: var(--color-text-primary);
       text-decoration: none;
@@ -143,6 +188,28 @@
     font-size: var(--font-size-md);
     line-height: var(--line-height-relaxed);
 
+    @include medium-screen {
+      margin-bottom: var(--spacing-3);
+      font-size: var(--font-size-sm);
+
+      // 限制摘要在中等屏幕上的行数
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    @include mixins.mobile {
+      margin-bottom: var(--spacing-3);
+      font-size: var(--font-size-sm);
+
+      // 限制摘要在小屏幕上的行数
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
     p {
       margin: 0;
     }
@@ -157,6 +224,19 @@
     border-top: var(--border-width-thin) solid var(--color-border);
     font-size: var(--font-size-sm);
     color: var(--color-text-tertiary);
+
+    @include medium-screen {
+      padding-top: var(--spacing-3);
+      flex-wrap: wrap;
+      gap: var(--spacing-2);
+    }
+
+    @include mixins.mobile {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-3);
+      padding-top: var(--spacing-3);
+    }
   }
 
   .post-card-author {
@@ -164,12 +244,27 @@
     align-items: center;
     gap: var(--spacing-2);
 
+    @include medium-screen {
+      flex: 1 0 100%;
+      margin-bottom: var(--spacing-2);
+    }
+
     .post-card-author-image {
       width: 36px;
       height: 36px;
       border-radius: var(--border-radius-full);
       object-fit: cover;
       border: 2px solid var(--color-primary-light);
+
+      @include medium-screen {
+        width: 32px;
+        height: 32px;
+      }
+
+      @include mixins.mobile {
+        width: 32px;
+        height: 32px;
+      }
     }
 
     .post-card-author-name {
@@ -183,17 +278,45 @@
     align-items: center;
     gap: var(--spacing-3);
 
+    @include medium-screen {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    @include mixins.mobile {
+      width: 100%;
+      justify-content: space-between;
+    }
+
     .post-card-date,
     .post-card-reading-time {
       display: flex;
       align-items: center;
       gap: var(--spacing-1);
+
+      @include medium-screen {
+        font-size: var(--font-size-xs);
+      }
+
+      @include mixins.mobile {
+        font-size: var(--font-size-xs);
+      }
     }
 
     .post-card-icon {
       width: 16px;
       height: 16px;
       color: var(--color-text-tertiary);
+
+      @include medium-screen {
+        width: 14px;
+        height: 14px;
+      }
+
+      @include mixins.mobile {
+        width: 14px;
+        height: 14px;
+      }
     }
   }
 
@@ -204,6 +327,16 @@
     margin-top: var(--spacing-4);
     padding-top: var(--spacing-3);
     border-top: var(--border-width-thin) solid var(--color-border-light);
+
+    @include medium-screen {
+      margin-top: var(--spacing-3);
+      padding-top: var(--spacing-2);
+    }
+
+    @include mixins.mobile {
+      margin-top: var(--spacing-3);
+      padding-top: var(--spacing-2);
+    }
 
     .post-card-tag {
       font-size: var(--font-size-xs);
@@ -226,38 +359,58 @@
 
   .post-card-image {
     height: 320px;
+
+    @include medium-screen {
+      height: 240px;
+    }
+
+    @include mixins.mobile {
+      height: 200px;
+    }
   }
 
   .post-card-title {
     font-size: var(--font-size-2xl);
+
+    @include medium-screen {
+      font-size: var(--font-size-xl);
+    }
+
+    @include mixins.mobile {
+      font-size: var(--font-size-xl);
+    }
   }
 
   .post-card-content {
     padding: var(--spacing-6);
+
+    @include medium-screen {
+      padding: var(--spacing-5);
+    }
+
+    @include mixins.mobile {
+      padding: var(--spacing-4);
+    }
   }
 
   .post-card-excerpt {
     font-size: var(--font-size-lg);
+
+    @include medium-screen {
+      font-size: var(--font-size-md);
+    }
+
+    @include mixins.mobile {
+      font-size: var(--font-size-md);
+    }
+  }
+
+  @include medium-screen {
+    grid-column: span 2;
   }
 
   @include mixins.mobile {
     grid-column: span 1;
-
-    .post-card-image {
-      height: 240px;
-    }
-
-    .post-card-title {
-      font-size: var(--font-size-xl);
-    }
-
-    .post-card-content {
-      padding: var(--spacing-5);
-    }
-
-    .post-card-excerpt {
-      font-size: var(--font-size-md);
-    }
   }
 }
 
@@ -265,14 +418,38 @@
 .post-card-compact {
   .post-card-image {
     height: 160px;
+
+    @include medium-screen {
+      height: 150px;
+    }
+
+    @include mixins.mobile {
+      height: 140px;
+    }
   }
 
   .post-card-content {
     padding: var(--spacing-4);
+
+    @include medium-screen {
+      padding: var(--spacing-3);
+    }
+
+    @include mixins.mobile {
+      padding: var(--spacing-3);
+    }
   }
 
   .post-card-title {
     font-size: var(--font-size-lg);
+
+    @include medium-screen {
+      font-size: var(--font-size-md);
+    }
+
+    @include mixins.mobile {
+      font-size: var(--font-size-md);
+    }
   }
 
   .post-card-meta {

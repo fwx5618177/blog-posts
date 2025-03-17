@@ -1,17 +1,52 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PostCardProps } from '../../types';
 import './PostCard.scss';
 
 const PostCard: React.FC<PostCardProps> = ({ post, variant = 'default' }) => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
+
+    // 在小屏幕和中等屏幕上使用更简短的日期格式
+    if (windowWidth <= 1200) {
+      return new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      }).format(date);
+    }
+
     return new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
     }).format(date);
   };
+
+  // 根据屏幕尺寸确定显示的标签数量
+  const getTagsToShow = () => {
+    if (windowWidth <= 768) {
+      return 3; // 移动设备显示3个标签
+    } else if (windowWidth <= 1200) {
+      return 4; // 中等屏幕显示4个标签
+    }
+    return 5; // 大屏幕显示5个标签
+  };
+
+  const tagsToShow = getTagsToShow();
 
   return (
     <article className={`post-card post-card-${variant}`}>
@@ -123,18 +158,21 @@ const PostCard: React.FC<PostCardProps> = ({ post, variant = 'default' }) => {
                 <circle cx="12" cy="12" r="10"></circle>
                 <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
-              {post.readingTime} min read
+              {post.readingTime} min
             </span>
           </div>
         </footer>
 
         {post.tags && post.tags.length > 0 && (
           <div className="post-card-tags">
-            {post.tags.map(tag => (
+            {post.tags.slice(0, tagsToShow).map(tag => (
               <Link key={tag.id} to={`/tags/${tag.slug}`} className="post-card-tag">
                 #{tag.name}
               </Link>
             ))}
+            {post.tags.length > tagsToShow && (
+              <span className="post-card-tag">+{post.tags.length - tagsToShow}</span>
+            )}
           </div>
         )}
       </div>

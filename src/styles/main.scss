@@ -1,25 +1,8 @@
-/* Main Styles */
-
-// Import Variables First
-@use "./variables";
-
-// Import Mixins
-@use "./mixins";
-
-// Import Reset
-@use "./reset";
-
-// Import Typography
-@use "./typography";
-
-// Import Layout
-@use "./layout";
-
-// Import Themes
-@use "./themes";
-
-// Import Animations
-@use "./animations";
-
-/* Component Styles */
-// These will be imported as we create components
+@use "./mixins.scss";
+@use "./themes.scss";
+@use "./animations.scss";
+@use "./variables.scss";
+@use "./reset.scss";
+@use "./typography.scss";
+@use "./layout.scss";
+@use "./error-pages.scss";

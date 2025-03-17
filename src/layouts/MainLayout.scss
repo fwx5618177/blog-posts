@@ -42,11 +42,13 @@
 
 // Main content area
 .main-content {
+  margin-top: 44px;
   display: flex;
   flex-direction: column;
   flex: 1;
   padding: var(--fluid-space-4) 0;
   gap: var(--spacing-6);
+  position: relative;
 
   // Layout with sidebar
   &.with-sidebar {
@@ -73,9 +75,43 @@
 // Primary content container
 .content-container {
   width: 100%;
+}
+
+// Sidebar toggle button - 只在博客详情页的移动端显示
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  bottom: var(--spacing-6);
+  right: var(--spacing-6);
+  z-index: 100;
+  width: 50px;
+  height: 50px;
+  border-radius: var(--border-radius-full);
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border: none;
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-normal) var(--transition-timing-function);
+
+  &:hover {
+    transform: translateY(-2px);
+    background-color: var(--color-primary-dark);
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  span {
+    display: none;
+  }
 
   @include mixins.mobile {
-    order: 2;
+    display: flex;
   }
 }
 
@@ -94,9 +130,43 @@
   }
 
   @include mixins.mobile {
-    order: 1;
-    padding-bottom: var(--spacing-8);
-    margin-bottom: var(--spacing-6);
+    display: none;
+    position: fixed;
+    top: var(--header-height-mobile);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    background-color: var(--color-background);
+    padding: var(--spacing-4);
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    transform: translateX(100%);
+    transition: transform var(--transition-normal) var(--transition-timing-function);
+
+    &.show-mobile {
+      display: block;
+      transform: translateX(0);
+    }
+  }
+}
+
+// 添加侧边栏背景遮罩，点击可关闭侧边栏
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 98;
+  opacity: 0;
+  transition: opacity var(--transition-normal) var(--transition-timing-function);
+
+  &.show {
+    display: block;
+    opacity: 1;
   }
 }
 

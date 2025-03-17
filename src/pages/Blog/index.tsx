@@ -38,13 +38,15 @@ const MOCK_POSTS: SimplifiedPost[] = [
     slug: 'getting-started-with-react-typescript',
     excerpt:
       'Learn how to set up a new React project with TypeScript and understand the benefits of using TypeScript with React.',
-    featuredImage: '/images/posts/react-typescript.jpg',
+    featuredImage:
+      'https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
     author: {
       id: '1',
       name: 'Jane Smith',
-      avatar: '/images/authors/jane-smith.jpg',
+      avatar:
+        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
     },
-    date: '2023-06-15',
+    date: '2023-06-15T10:00:00Z',
     readTime: '8 min read',
     category: {
       id: '1',
@@ -63,13 +65,15 @@ const MOCK_POSTS: SimplifiedPost[] = [
     slug: 'advanced-css-techniques',
     excerpt:
       'Explore advanced CSS techniques like Grid, Flexbox, and CSS Variables to create responsive and maintainable layouts.',
-    featuredImage: '/images/posts/css-techniques.jpg',
+    featuredImage:
+      'https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
     author: {
       id: '2',
       name: 'John Doe',
-      avatar: '/images/authors/john-doe.jpg',
+      avatar:
+        'https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
     },
-    date: '2023-05-28',
+    date: '2023-05-28T14:30:00Z',
     readTime: '10 min read',
     category: {
       id: '2',
@@ -88,13 +92,15 @@ const MOCK_POSTS: SimplifiedPost[] = [
     slug: 'building-rest-api-nodejs-express',
     excerpt:
       'Learn how to create a RESTful API using Node.js and Express, with MongoDB as the database.',
-    featuredImage: '/images/posts/nodejs-api.jpg',
+    featuredImage:
+      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
     author: {
       id: '3',
       name: 'Alex Johnson',
-      avatar: '/images/authors/alex-johnson.jpg',
+      avatar:
+        'https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
     },
-    date: '2023-05-10',
+    date: '2023-05-10T09:15:00Z',
     readTime: '12 min read',
     category: {
       id: '3',
@@ -114,13 +120,15 @@ const MOCK_POSTS: SimplifiedPost[] = [
     slug: 'introduction-state-management-redux',
     excerpt:
       'Understand the core concepts of Redux and learn how to implement it in your React applications.',
-    featuredImage: '/images/posts/redux-state.jpg',
+    featuredImage:
+      'https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
     author: {
       id: '4',
       name: 'Sarah Williams',
-      avatar: '/images/authors/sarah-williams.jpg',
+      avatar:
+        'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
     },
-    date: '2023-04-22',
+    date: '2023-04-22T11:45:00Z',
     readTime: '9 min read',
     category: {
       id: '1',
@@ -139,13 +147,15 @@ const MOCK_POSTS: SimplifiedPost[] = [
     slug: 'optimizing-web-performance',
     excerpt:
       'Learn strategies and techniques to optimize your web applications for better performance and user experience.',
-    featuredImage: '/images/posts/web-performance.jpg',
+    featuredImage:
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2015&q=80',
     author: {
       id: '5',
       name: 'Michael Brown',
-      avatar: '/images/authors/michael-brown.jpg',
+      avatar:
+        'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
     },
-    date: '2023-04-05',
+    date: '2023-04-05T08:30:00Z',
     readTime: '15 min read',
     category: {
       id: '4',
@@ -164,13 +174,15 @@ const MOCK_POSTS: SimplifiedPost[] = [
     slug: 'creating-accessible-web-applications',
     excerpt:
       'Discover best practices for building web applications that are accessible to all users, including those with disabilities.',
-    featuredImage: '/images/posts/accessibility.jpg',
+    featuredImage:
+      'https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80',
     author: {
       id: '6',
       name: 'Emily Chen',
-      avatar: '/images/authors/emily-chen.jpg',
+      avatar:
+        'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
     },
-    date: '2023-03-18',
+    date: '2023-03-18T13:20:00Z',
     readTime: '11 min read',
     category: {
       id: '5',

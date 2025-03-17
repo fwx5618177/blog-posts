@@ -7,6 +7,15 @@ interface SidebarProps {
   tags?: { id: string; name: string; slug: string }[];
   recentPosts?: { id: string; title: string; slug: string }[];
   tableOfContents?: { id: string; title: string; level: number }[];
+  archiveYears?: { year: string; count: number }[];
+  currentPage?:
+    | 'blog'
+    | 'blog-detail'
+    | 'archive-list'
+    | 'archive-detail'
+    | 'resources'
+    | 'categories'
+    | 'tags';
 }
 
 /**
@@ -18,20 +27,30 @@ interface SidebarProps {
  * - Recent posts listing
  * - Categories and tags navigation
  * - Table of contents for article details
+ * - Archives by year
  */
 const Sidebar: React.FC<SidebarProps> = ({
   categories = [],
   tags = [],
   recentPosts = [],
   tableOfContents = [],
+  archiveYears = [],
+  currentPage = 'blog',
 }) => {
   const location = useLocation();
-  const isArticlePage = location.pathname.includes('/blog/') && location.pathname !== '/blog/';
+
+  // 判断是否显示目录
+  const shouldShowTableOfContents =
+    (currentPage === 'blog-detail' ||
+      (currentPage === 'resources' &&
+        location.pathname !== '/resources' &&
+        location.pathname !== '/resources/')) &&
+    tableOfContents.length > 0;
 
   return (
     <div className="sidebar">
-      {/* Table of Contents - Only shown on article pages */}
-      {isArticlePage && tableOfContents.length > 0 && (
+      {/* Table of Contents - Only shown on article pages and resource detail pages */}
+      {shouldShowTableOfContents && (
         <div className="sidebar-widget toc-widget">
           <h3 className="widget-title">Table of Contents</h3>
           <nav className="toc-nav">
@@ -48,12 +67,12 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
       )}
 
-      {/* Author Profile - Not shown on article pages */}
-      {!isArticlePage && (
+      {/* Author Profile - Not shown on article detail pages */}
+      {currentPage !== 'blog-detail' && currentPage !== 'resources' && (
         <div className="sidebar-widget author-widget">
           <div className="author-profile">
             <div className="author-avatar">
-              <img src="https://via.placeholder.com/100" alt="Author" />
+              <img src="https://i.pravatar.cc/300?img=5" alt="Author" />
             </div>
             <div className="author-info">
               <h3 className="author-name">John Doe</h3>
@@ -170,6 +189,39 @@ const Sidebar: React.FC<SidebarProps> = ({
         </form>
       </div>
 
+      {/* Archives Widget */}
+      {archiveYears.length > 0 && (
+        <div className="sidebar-widget archives-widget">
+          <h3 className="widget-title">Archives</h3>
+          <ul className="archives-list">
+            {archiveYears.map(archive => (
+              <li key={archive.year} className="archive-item">
+                <Link to={`/archives/${archive.year}`} className="archive-link">
+                  <span className="archive-year">{archive.year}</span>
+                  <span className="archive-count">{archive.count}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link to="/archives" className="view-all-link">
+            View all archives
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="icon-arrow"
+            >
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </Link>
+        </div>
+      )}
+
       {/* Recent Posts Widget */}
       {recentPosts.length > 0 && (
         <div className="sidebar-widget recent-posts-widget">
@@ -215,6 +267,22 @@ const Sidebar: React.FC<SidebarProps> = ({
               </li>
             ))}
           </ul>
+          <Link to="/categories" className="view-all-link">
+            View all categories
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="icon-arrow"
+            >
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </Link>
         </div>
       )}
 
@@ -229,6 +297,22 @@ const Sidebar: React.FC<SidebarProps> = ({
               </Link>
             ))}
           </div>
+          <Link to="/tags" className="view-all-link">
+            View all tags
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="icon-arrow"
+            >
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </Link>
         </div>
       )}
     </div>
