@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import './Blog.scss';
 
@@ -8,6 +8,8 @@ interface PostDetail {
   title: string;
   slug: string;
   content: string;
+  excerpt: string; // 文章摘要/前言
+  conclusion: string; // 结语/后记
   featuredImage: string;
   author: {
     id: string;
@@ -29,12 +31,26 @@ interface PostDetail {
   }[];
 }
 
+// 定义评论类型
+interface Comment {
+  id: string;
+  author: {
+    name: string;
+    avatar: string;
+  };
+  content: string;
+  date: string;
+  replies?: Comment[];
+}
+
 // 模拟文章详情数据
 const MOCK_POST_DETAILS: Record<string, PostDetail> = {
   'getting-started-with-react-typescript': {
     id: '1',
     title: 'Getting Started with React and TypeScript',
     slug: 'getting-started-with-react-typescript',
+    excerpt: `TypeScript is becoming the standard for React development, offering improved type safety, better tooling, and enhanced developer experience. This comprehensive guide will walk you through setting up and getting started with TypeScript in your React projects.`,
+    conclusion: `TypeScript and React make an excellent combination for building robust web applications. By using TypeScript with React, you can catch errors earlier in the development process, improve code maintainability, and enhance team collaboration. We hope this guide helps you on your journey to building better React applications with TypeScript!`,
     content: `
       <h2 id="introduction">Introduction</h2>
       <p>TypeScript has become increasingly popular in the React ecosystem, offering type safety and improved developer experience. This guide will help you get started with using TypeScript in your React projects.</p>
@@ -165,6 +181,8 @@ const Counter: React.FC<CounterProps> = ({ initialCount }) => {
     id: '2',
     title: 'Advanced CSS Techniques for Modern Layouts',
     slug: 'advanced-css-techniques',
+    excerpt: `Modern web design demands efficient and flexible layout solutions. This article explores advanced CSS techniques that will help you create stunning, responsive layouts with less code and better maintainability.`,
+    conclusion: `CSS has evolved dramatically over the years, providing web developers with powerful tools for creating layouts that were once only possible with JavaScript or complex hacks. By mastering these advanced CSS techniques, you'll be able to build more efficient, maintainable, and visually appealing websites. Keep experimenting with these techniques and your web designs will stand out in today's competitive landscape.`,
     content: `
       <h2 id="introduction">Introduction</h2>
       <p>Modern CSS has evolved significantly, offering powerful features for creating complex layouts with less code. This article explores advanced CSS techniques that can elevate your web design skills.</p>
@@ -245,6 +263,193 @@ const Counter: React.FC<CounterProps> = ({ initialCount }) => {
       },
     ],
   },
+  'javascript-async-await': {
+    id: '3',
+    title: 'Understanding JavaScript Async/Await',
+    slug: 'javascript-async-await',
+    excerpt: `Asynchronous programming is essential for modern web development. This article explains the async/await syntax in JavaScript, how it works under the hood, and how to use it effectively in your projects.`,
+    conclusion: `Async/await provides a clean, intuitive way to handle asynchronous operations in JavaScript. By understanding how it works and following best practices, you can write more maintainable and efficient code. Remember to handle errors properly and avoid common pitfalls to make the most of this powerful feature.`,
+    content: `
+      <h2 id="introduction">Introduction</h2>
+      <p>JavaScript's async/await syntax makes asynchronous programming much more intuitive. This article dives into how it works and how to use it effectively.</p>
+
+      <h2 id="basics">The Basics</h2>
+      <p>Async/await is built on Promises and provides a more readable way to work with asynchronous code:</p>
+
+      <pre><code>async function fetchData() {
+  try {
+    const response = await fetch('https://api.example.com/data');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}</code></pre>
+
+      <h2 id="error-handling">Error Handling</h2>
+      <p>There are multiple ways to handle errors with async/await:</p>
+
+      <pre><code>// Using try/catch
+async function method1() {
+  try {
+    const result = await riskyOperation();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Using Promise's catch
+async function method2() {
+  const result = await riskyOperation().catch(error => {
+    console.error(error);
+    return defaultValue;
+  });
+  return result;
+}</code></pre>
+
+      <h2 id="conclusion">Conclusion</h2>
+      <p>Async/await simplifies asynchronous JavaScript code, making it more readable and maintainable. Understanding its foundations and best practices is essential for modern web development.</p>
+    `,
+    featuredImage: '/images/posts/async-await.jpg',
+    author: {
+      id: '3',
+      name: 'Alex Johnson',
+      avatar: '/images/authors/alex-johnson.jpg',
+      bio: 'JavaScript developer specializing in modern ECMAScript features and web performance.',
+    },
+    date: '2023-07-10',
+    readTime: '7 min read',
+    category: {
+      id: '3',
+      name: 'JavaScript',
+      slug: 'javascript',
+    },
+    tags: [
+      {
+        id: '7',
+        name: 'JavaScript',
+        slug: 'javascript',
+      },
+      {
+        id: '8',
+        name: 'Async',
+        slug: 'async',
+      },
+      {
+        id: '9',
+        name: 'Web Development',
+        slug: 'web-development',
+      },
+    ],
+  },
+};
+
+// 模拟评论数据
+const MOCK_COMMENTS: Record<string, Comment[]> = {
+  'getting-started-with-react-typescript': [
+    {
+      id: '1',
+      author: {
+        name: 'Robert Chen',
+        avatar: '/images/avatars/user1.jpg',
+      },
+      content:
+        'Great article! Very helpful for beginners like me who are just starting with TypeScript in React projects.',
+      date: '2023-06-18',
+      replies: [
+        {
+          id: '2',
+          author: {
+            name: 'Jane Smith',
+            avatar: '/images/authors/jane-smith.jpg',
+          },
+          content:
+            "Thanks Robert! I'm glad you found it helpful. Let me know if you have any questions!",
+          date: '2023-06-19',
+        },
+      ],
+    },
+    {
+      id: '3',
+      author: {
+        name: 'Sarah Williams',
+        avatar: '/images/avatars/user2.jpg',
+      },
+      content:
+        'Could you write a follow-up article about using TypeScript with React hooks? That would be super useful!',
+      date: '2023-06-20',
+    },
+  ],
+  'advanced-css-techniques': [
+    {
+      id: '1',
+      author: {
+        name: 'Michael Torres',
+        avatar: '/images/avatars/user3.jpg',
+      },
+      content:
+        "I've been using CSS Grid for a while now, and it's definitely a game-changer. Thanks for the clear examples!",
+      date: '2023-05-25',
+    },
+  ],
+  'javascript-async-await': [
+    {
+      id: '1',
+      author: {
+        name: 'Emma Davis',
+        avatar: '/images/avatars/user4.jpg',
+      },
+      content:
+        'This helped me understand async/await so much better. The error handling section was particularly useful.',
+      date: '2023-07-12',
+    },
+    {
+      id: '2',
+      author: {
+        name: 'Jamal Wilson',
+        avatar: '/images/avatars/user5.jpg',
+      },
+      content:
+        'Great explanation of the internals. I never fully grasped how async/await worked under the hood until now.',
+      date: '2023-07-15',
+    },
+  ],
+};
+
+// 获取所有文章的数组
+const getAllPosts = (): PostDetail[] => {
+  return Object.values(MOCK_POST_DETAILS);
+};
+
+// 获取相关文章
+const getRelatedPosts = (currentPost: PostDetail, limit = 2): PostDetail[] => {
+  // 根据相同标签和分类获取相关文章
+  const allPosts = getAllPosts();
+
+  return allPosts
+    .filter(
+      post =>
+        post.id !== currentPost.id && // 排除当前文章
+        (post.category.id === currentPost.category.id || // 相同分类
+          post.tags.some(tag => currentPost.tags.some(t => t.id === tag.id))) // 有相同标签
+    )
+    .slice(0, limit); // 限制数量
+};
+
+// 获取上一篇和下一篇文章
+const getAdjacentPosts = (
+  currentPost: PostDetail
+): { previous: PostDetail | null; next: PostDetail | null } => {
+  const allPosts = getAllPosts().sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+  const currentIndex = allPosts.findIndex(post => post.id === currentPost.id);
+
+  return {
+    previous: currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null,
+    next: currentIndex > 0 ? allPosts[currentIndex - 1] : null,
+  };
 };
 
 // 格式化日期
@@ -255,6 +460,145 @@ const formatDate = (dateString: string) => {
     month: 'long',
     day: 'numeric',
   }).format(date);
+};
+
+/**
+ * Comment component
+ */
+const CommentItem: React.FC<{ comment: Comment; level?: number }> = ({ comment, level = 0 }) => {
+  return (
+    <div className={`comment-item ${level > 0 ? 'comment-reply' : ''}`}>
+      <div className="comment-header">
+        <div className="comment-author">
+          <img src={comment.author.avatar} alt={comment.author.name} className="comment-avatar" />
+          <span className="comment-author-name">{comment.author.name}</span>
+        </div>
+        <span className="comment-date">{formatDate(comment.date)}</span>
+      </div>
+      <div className="comment-content">
+        <p>{comment.content}</p>
+      </div>
+      {comment.replies && comment.replies.length > 0 && (
+        <div className="comment-replies">
+          {comment.replies.map(reply => (
+            <CommentItem key={reply.id} comment={reply} level={level + 1} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+/**
+ * Comments section component
+ */
+const CommentsSection: React.FC<{ comments: Comment[] }> = ({ comments }) => {
+  const [newComment, setNewComment] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // In a real app, this would send the comment to a backend
+    alert(`Comment submitted: ${newComment}`);
+    setNewComment('');
+  };
+
+  return (
+    <div className="comments-section">
+      <h3 className="comments-title">Comments ({comments.length})</h3>
+
+      {comments.length > 0 ? (
+        <div className="comments-list">
+          {comments.map(comment => (
+            <CommentItem key={comment.id} comment={comment} />
+          ))}
+        </div>
+      ) : (
+        <div className="no-comments">
+          <p>No comments yet. Be the first to share your thoughts!</p>
+        </div>
+      )}
+
+      <div className="comment-form-container">
+        <h4 className="form-title">Leave a Comment</h4>
+        <form className="comment-form" onSubmit={handleSubmit}>
+          <textarea
+            className="comment-textarea"
+            placeholder="Share your thoughts..."
+            value={newComment}
+            onChange={e => setNewComment(e.target.value)}
+            required
+          />
+          <button type="submit" className="comment-submit">
+            Post Comment
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+/**
+ * Post navigation component
+ */
+const PostNavigation: React.FC<{ previous: PostDetail | null; next: PostDetail | null }> = ({
+  previous,
+  next,
+}) => {
+  return (
+    <div className="post-navigation">
+      <div className="post-nav-links">
+        {previous ? (
+          <Link to={`/blog/${previous.slug}`} className="post-nav-link prev-post">
+            <span className="post-nav-label">← Previous Post</span>
+            <span className="post-nav-title">{previous.title}</span>
+          </Link>
+        ) : (
+          <div className="post-nav-link prev-post disabled">
+            <span className="post-nav-label">← Previous Post</span>
+            <span className="post-nav-empty">No previous posts</span>
+          </div>
+        )}
+
+        {next ? (
+          <Link to={`/blog/${next.slug}`} className="post-nav-link next-post">
+            <span className="post-nav-label">Next Post →</span>
+            <span className="post-nav-title">{next.title}</span>
+          </Link>
+        ) : (
+          <div className="post-nav-link next-post disabled">
+            <span className="post-nav-label">Next Post →</span>
+            <span className="post-nav-empty">No newer posts</span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+/**
+ * Related posts component
+ */
+const RelatedPosts: React.FC<{ posts: PostDetail[] }> = ({ posts }) => {
+  if (posts.length === 0) return null;
+
+  return (
+    <div className="related-posts">
+      <h3 className="related-posts-title">You Might Also Like</h3>
+      <div className="related-posts-grid">
+        {posts.map(post => (
+          <Link to={`/blog/${post.slug}`} key={post.id} className="related-post-card">
+            <div className="related-post-image">
+              <img src={post.featuredImage} alt={post.title} />
+            </div>
+            <div className="related-post-content">
+              <h4 className="related-post-title">{post.title}</h4>
+              <span className="related-post-date">{formatDate(post.date)}</span>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 /**
@@ -303,6 +647,10 @@ const BlogDetailPage: React.FC = () => {
     );
   }
 
+  const { previous, next } = getAdjacentPosts(post);
+  const relatedPosts = getRelatedPosts(post);
+  const comments = MOCK_COMMENTS[post.slug] || [];
+
   return (
     <div className="blog-detail-page">
       <div className="container">
@@ -332,8 +680,28 @@ const BlogDetailPage: React.FC = () => {
             <img src={post.featuredImage} alt={post.title} />
           </div>
 
+          {/* Post Excerpt/Introduction */}
+          <div className="post-excerpt">
+            <p>{post.excerpt}</p>
+          </div>
+
+          {/* Tags */}
+          <div className="post-tags post-tags-header">
+            {post.tags.map(tag => (
+              <Link key={tag.id} to={`/tags/${tag.slug}`} className="post-tag">
+                #{tag.name}
+              </Link>
+            ))}
+          </div>
+
           {/* Post Content */}
           <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content }} />
+
+          {/* Post Conclusion */}
+          <div className="post-conclusion">
+            <h3>Final Thoughts</h3>
+            <p>{post.conclusion}</p>
+          </div>
 
           {/* Post Footer */}
           <footer className="post-footer">
@@ -353,13 +721,18 @@ const BlogDetailPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="post-navigation">
-              <Link to="/blog" className="back-to-blog">
-                ← Back to Blog
-              </Link>
-            </div>
+            {/* Related Posts */}
+            <RelatedPosts posts={relatedPosts} />
+
+            {/* Post Navigation */}
+            <PostNavigation previous={previous} next={next} />
           </footer>
         </article>
+
+        {/* Comments Section */}
+        <section className="blog-comments">
+          <CommentsSection comments={comments} />
+        </section>
       </div>
     </div>
   );
