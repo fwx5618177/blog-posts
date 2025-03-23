@@ -75,6 +75,127 @@ const AboutPage: React.FC = () => {
     }
   };
 
+  const Resume = () => {
+    return (
+      <section className="resume-section">
+        <div className="resume-expertise">
+          <h3 className="expertise-title">Technical Expertise</h3>
+          <div className="expertise-grid">
+            <div className="expertise-item">
+              <div className="expertise-header">
+                <span className="expertise-name">Frontend Development</span>
+                <span className="expertise-level">Advanced</span>
+              </div>
+              <div className="expertise-skills">
+                <span className="skill-tag" data-level="95">
+                  React
+                </span>
+                <span className="skill-tag" data-level="90">
+                  TypeScript
+                </span>
+                <span className="skill-tag" data-level="85">
+                  Next.js
+                </span>
+                <span className="skill-tag" data-level="90">
+                  Vue
+                </span>
+                <span className="skill-tag" data-level="85">
+                  Webpack
+                </span>
+              </div>
+            </div>
+            <div className="expertise-item">
+              <div className="expertise-header">
+                <span className="expertise-name">Backend Development</span>
+                <span className="expertise-level">Proficient</span>
+              </div>
+              <div className="expertise-skills">
+                <span className="skill-tag" data-level="85">
+                  Node.js
+                </span>
+                <span className="skill-tag" data-level="80">
+                  Express
+                </span>
+                <span className="skill-tag" data-level="75">
+                  MongoDB
+                </span>
+                <span className="skill-tag" data-level="70">
+                  MySQL
+                </span>
+                <span className="skill-tag" data-level="75">
+                  Redis
+                </span>
+              </div>
+            </div>
+            <div className="expertise-item">
+              <div className="expertise-header">
+                <span className="expertise-name">DevOps & Tools</span>
+                <span className="expertise-level">Intermediate</span>
+              </div>
+              <div className="expertise-skills">
+                <span className="skill-tag" data-level="80">
+                  Git
+                </span>
+                <span className="skill-tag" data-level="75">
+                  Docker
+                </span>
+                <span className="skill-tag" data-level="70">
+                  CI/CD
+                </span>
+                <span className="skill-tag" data-level="65">
+                  AWS
+                </span>
+                <span className="skill-tag" data-level="70">
+                  Linux
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="resume-achievements">
+          <h3 className="achievements-title">Key Achievements</h3>
+          <div className="achievements-list">
+            <div className="achievement-item">
+              <span className="achievement-icon">🚀</span>
+              <div className="achievement-content">
+                <h5>8+ Years Experience</h5>
+                <p>Full-stack development expertise with modern web technologies</p>
+              </div>
+            </div>
+            <div className="achievement-item">
+              <span className="achievement-icon">💼</span>
+              <div className="achievement-content">
+                <h5>50+ Projects Completed</h5>
+                <p>Successfully delivered projects across various industries</p>
+              </div>
+            </div>
+            <div className="achievement-item">
+              <span className="achievement-icon">📝</span>
+              <div className="achievement-content">
+                <h5>20+ Technical Articles</h5>
+                <p>Sharing knowledge and best practices with the community</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="resume-action">
+          <Link to="/resume" className="view-resume-link">
+            <span>View Full Resume</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path
+                fillRule="evenodd"
+                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </Link>
+        </div>
+      </section>
+    );
+  };
+
   return (
     <div className="about-page">
       <div className="about-header">
@@ -178,26 +299,91 @@ const AboutPage: React.FC = () => {
 
             <section className="about-section resume-section" ref={setRef(1)}>
               <h2 className="section-title">Resume</h2>
-              <div className="resume-container">
-                <div className="resume-preview">
-                  <div className="resume-thumbnail">
-                    <img
-                      src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
-                      alt="Resume preview"
-                    />
-                    <div className="resume-overlay">
-                      <span>Professional Resume</span>
-                    </div>
+              <div className="resume-content">
+                <div className="resume-header">
+                  <div className="resume-title">
+                    <h3>Senior Full Stack Engineer</h3>
+                    <span className="resume-subtitle">Specialized in Modern Web Development</span>
+                  </div>
+                  <div className="resume-actions">
+                    <Link to="/resume" className="resume-link primary">
+                      <span className="link-content">
+                        <span className="link-text">View Full Resume</span>
+                        <svg
+                          className="link-icon"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M12 5l7 7-7 7M5 12h14"></path>
+                        </svg>
+                      </span>
+                      <span className="link-background"></span>
+                    </Link>
                   </div>
                 </div>
-                <div className="resume-buttons">
-                  <Link to="/resume" className="resume-button view">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                      <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
-                    View Online Resume
-                  </Link>
+
+                <div className="resume-body">
+                  <div className="resume-description">
+                    <p>
+                      Currently leading frontend development at TechInnovate, focusing on building
+                      scalable web applications and microservices. Passionate about creating
+                      performant user experiences and mentoring junior developers.
+                    </p>
+                  </div>
+
+                  <Resume />
+
+                  <div className="resume-stats">
+                    <div className="stat-item">
+                      <div className="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M12 2v6m0 12v-6m0 0a6 6 0 100-12 6 6 0 000 12z"></path>
+                        </svg>
+                      </div>
+                      <div className="stat-content">
+                        <span className="stat-number">8+</span>
+                        <span className="stat-label">Years Experience</span>
+                        <span className="stat-detail">Full Stack Development</span>
+                      </div>
+                      <div className="stat-progress">
+                        <div className="progress-bar" style={{ width: '80%' }}></div>
+                      </div>
+                    </div>
+
+                    <div className="stat-item">
+                      <div className="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path>
+                        </svg>
+                      </div>
+                      <div className="stat-content">
+                        <span className="stat-number">50+</span>
+                        <span className="stat-label">Projects Delivered</span>
+                        <span className="stat-detail">Enterprise & Startup Solutions</span>
+                      </div>
+                      <div className="stat-progress">
+                        <div className="progress-bar" style={{ width: '90%' }}></div>
+                      </div>
+                    </div>
+
+                    <div className="stat-item">
+                      <div className="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M12 20V10m0 0L8 14m4-4l4 4m-4-4V4"></path>
+                        </svg>
+                      </div>
+                      <div className="stat-content">
+                        <span className="stat-number">20+</span>
+                        <span className="stat-label">Tech Publications</span>
+                        <span className="stat-detail">Articles & Tutorials</span>
+                      </div>
+                      <div className="stat-progress">
+                        <div className="progress-bar" style={{ width: '70%' }}></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </section>
@@ -510,7 +696,7 @@ const AboutPage: React.FC = () => {
                 >
                   <div className="connect-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12a12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.325.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472c-.18 1.898-.962 6.502-1.36 8.627c-.168.9-.499 1.201-.82 1.23c-.696.065-1.225-.46-1.9-.902c-1.056-.693-1.653-1.124-2.678-1.8c-1.185-.78-.417-1.21.258-1.91c.177-.184 3.247-2.977 3.307-3.23c.007-.032.014-.15-.056-.212s-.174-.041-.247-.024c-.106.024-1.793 1.14-5.061 3.345c-.48.33-.913.49-1.302.48c-.428-.008-1.252-.241-1.865-.44c-.752-.245-1.349-.374-1.297-.789c.027-.216.325-.437.893-.663c3.498-1.524 5.83-2.529 6.998-3.014c3.332-1.386 4.025-1.627 4.476-1.635z" />
+                      <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12a12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.325.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472c-.18 1.898-.962 6.502-1.36 8.627c-.168.9-.499 1.201-.82 1.23c-.696.065-1.225-.46-1.9-.902c-1.056-.693-1.653-1.124-2.678-1.8c-1.185-.78-.417-1.21.258-1.91c.177-.184 3.247-2.977 3.307-3.23c.007-.032.014-.15-.056-.212s-.041-.041-.247-.024c-.106.024-1.793 1.14-5.061 3.345c-.48.33-.913.49-1.302.48c-.428-.008-1.252-.241-1.865-.44c-.752-.245-1.349-.374-1.297-.789c.027-.216.325-.437.893-.663c3.498-1.524 5.83-2.529 6.998-3.014c3.332-1.386 4.025-1.627 4.476-1.635z" />
                     </svg>
                   </div>
                   <h3>Telegram Channel</h3>
