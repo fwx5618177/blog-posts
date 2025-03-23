@@ -1,0 +1,13 @@
+.arrow-right {
+  margin-top: auto;
+  align-self: flex-end;
+  width: 24px;
+  height: 24px;
+  color: var(--color-text-tertiary);
+  transition: all var(--transition-fast) var(--transition-timing-function);
+
+  &:hover {
+    color: var(--color-primary);
+    transform: translateX(var(--spacing-1));
+  }
+}

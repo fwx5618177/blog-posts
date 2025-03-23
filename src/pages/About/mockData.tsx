@@ -4,9 +4,17 @@ import { LinkedinIcon } from './icons/LinkedinIcon';
 import { TelegramIcon } from './icons/TelegramIcon';
 import { TwitterChannelIcon } from './icons/TwitterChannelIcon';
 import { TwitterIcon } from './icons/TwitterIcon';
+import {
+  CategorySkillProps,
+  ConnectLinkProps,
+  JourneyProps,
+  KeyAchievementsProps,
+  SocialLinkProps,
+  TechnicalExpertiseProps,
+} from './types';
 
 // 技术专长数据
-export const technicalExpertise = [
+export const technicalExpertise: TechnicalExpertiseProps[] = [
   {
     name: 'Frontend Development',
     level: 'Advanced',
@@ -43,7 +51,7 @@ export const technicalExpertise = [
 ];
 
 // 主要成就数据
-export const keyAchievements = [
+export const keyAchievements: KeyAchievementsProps[] = [
   {
     icon: '🚀',
     title: '8+ Years Experience',
@@ -62,7 +70,7 @@ export const keyAchievements = [
 ];
 
 // 社交媒体链接数据
-export const socialLinks = [
+export const socialLinks: SocialLinkProps[] = [
   {
     name: 'GitHub',
     url: 'https://github.com/',
@@ -81,7 +89,7 @@ export const socialLinks = [
 ];
 
 // 技能数据
-export const skillsData = [
+export const skillsData: CategorySkillProps[] = [
   {
     category: 'Frontend',
     skills: [
@@ -112,7 +120,7 @@ export const skillsData = [
 ];
 
 // 职业经历数据
-export const journeyData = [
+export const journeyData: JourneyProps[] = [
   {
     period: '2023 - Present',
     role: 'Senior Full Stack Developer',
@@ -217,7 +225,7 @@ export const journeyData = [
 ];
 
 // 社交连接数据
-export const connectLinks = [
+export const connectLinks: ConnectLinkProps[] = [
   {
     platform: 'Discord',
     url: 'https://discord.gg/your-discord',
