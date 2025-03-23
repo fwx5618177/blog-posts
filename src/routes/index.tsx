@@ -21,6 +21,8 @@ const TagDetailPage = lazy(() => import('../pages/Tags/TagDetail'));
 const AboutPage = lazy(() => import('../pages/About'));
 const ArchivesPage = lazy(() => import('../pages/Archives'));
 const ArchiveDetailPage = lazy(() => import('../pages/Archives/ArchiveDetail'));
+const ContactPage = lazy(() => import('../pages/Contact/Contact'));
+const ResumePage = lazy(() => import('../pages/Resume'));
 
 // Define routes
 const routes: RouteObject[] = [
@@ -102,6 +104,22 @@ const routes: RouteObject[] = [
         element: (
           <Suspense fallback={<Loading />}>
             <AboutPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'resume',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ResumePage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'contact',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ContactPage />
           </Suspense>
         ),
       },

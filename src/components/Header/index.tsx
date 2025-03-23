@@ -16,6 +16,8 @@ const navigationItems = [
   { path: '/categories', label: 'Categories', exact: false },
   { path: '/tags', label: 'Tags', exact: false },
   { path: '/archives', label: 'Archives', exact: false },
+  { path: '/about', label: 'About', exact: true },
+  { path: '/contact', label: 'Contact', exact: true },
 ];
 
 const Header: React.FC<HeaderProps> = ({ siteTitle = 'FWX Blog' }) => {
@@ -283,6 +285,9 @@ const Header: React.FC<HeaderProps> = ({ siteTitle = 'FWX Blog' }) => {
                     </svg>
                   </button>
                   <div className={`dropdown-menu ${showDropdown === 'resources' ? 'show' : ''}`}>
+                    <Link to="/resume" className="dropdown-item">
+                      Resume
+                    </Link>
                     <Link to="/code-block-demo" className="dropdown-item">
                       Code Blocks
                     </Link>
@@ -299,11 +304,6 @@ const Header: React.FC<HeaderProps> = ({ siteTitle = 'FWX Blog' }) => {
                       Documentation
                     </a>
                   </div>
-                </li>
-                <li className="nav-item">
-                  <Link to="/about" className="nav-link">
-                    About
-                  </Link>
                 </li>
               </ul>
 
