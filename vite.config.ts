@@ -1,14 +1,23 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { createHtmlPlugin } from 'vite-plugin-html';
 import { resolve } from 'path';
 import { visualizer } from 'rollup-plugin-visualizer';
 
 export default defineConfig(({ mode }) => {
   const isAnalyze = mode === 'analyze';
+  const isDev = mode === 'development';
 
   return {
     plugins: [
       react(),
+      createHtmlPlugin({
+        inject: {
+          data: {
+            VITE_APP_TITLE: isDev ? '[DEV]Moxi - Blog' : 'Moxi - Blog',
+          },
+        },
+      }),
       isAnalyze &&
         visualizer({
           open: true,
