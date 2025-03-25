@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- 文本线条渐变 -->
+    <linearGradient id="textLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:currentColor;stop-opacity:0.6"/>
+      <stop offset="50%" style="stop-color:currentColor;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:currentColor;stop-opacity:0.6"/>
+    </linearGradient>
+
+    <!-- 装饰性圆点渐变 -->
+    <radialGradient id="dotGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:currentColor;stop-opacity:0.8"/>
+      <stop offset="50%" style="stop-color:currentColor;stop-opacity:0.6"/>
+      <stop offset="100%" style="stop-color:currentColor;stop-opacity:0.2"/>
+    </radialGradient>
+  </defs>
+
+  <!-- 背景纸张图案组 -->
+  <g class="paper-pattern">
+    <!-- 文本线条 -->
+    <g class="text-lines">
+      <path d="M12 15h36" stroke="url(#textLine)" stroke-width="1.2" fill="none">
+        <animate attributeName="opacity" values="0.5;0.8;0.5" dur="3s" repeatCount="indefinite"/>
+      </path>
+      <path d="M12 22h30" stroke="url(#textLine)" stroke-width="1.2" fill="none">
+        <animate attributeName="opacity" values="0.6;0.9;0.6" dur="4s" repeatCount="indefinite"/>
+      </path>
+      <path d="M12 29h33" stroke="url(#textLine)" stroke-width="1.2" fill="none">
+        <animate attributeName="opacity" values="0.5;0.8;0.5" dur="3.5s" repeatCount="indefinite"/>
+      </path>
+      <path d="M12 36h25" stroke="url(#textLine)" stroke-width="1.2" fill="none">
+        <animate attributeName="opacity" values="0.6;0.9;0.6" dur="4.5s" repeatCount="indefinite"/>
+      </path>
+    </g>
+
+    <!-- 装饰性元素 -->
+    <g class="decorative-elements">
+      <!-- 左上角装饰 -->
+      <path d="M4 4l10 10M4 14l10-10"
+            stroke="currentColor"
+            stroke-width="1"
+            stroke-opacity="0.5"
+            fill="none">
+        <animate attributeName="stroke-opacity" values="0.4;0.7;0.4" dur="3s" repeatCount="indefinite"/>
+      </path>
+
+      <!-- 右下角装饰 -->
+      <path d="M46 46l10 10M46 56l10-10"
+            stroke="currentColor"
+            stroke-width="1"
+            stroke-opacity="0.5"
+            fill="none">
+        <animate attributeName="stroke-opacity" values="0.4;0.7;0.4" dur="3s" repeatCount="indefinite"/>
+      </path>
+
+      <!-- 装饰性圆点 -->
+      <circle cx="10" cy="50" r="3" fill="url(#dotGlow)">
+        <animate attributeName="opacity" values="0.5;0.8;0.5" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="50" cy="10" r="3" fill="url(#dotGlow)">
+        <animate attributeName="opacity" values="0.6;0.9;0.6" dur="3s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+
+    <!-- 中心装饰性图案 -->
+    <g class="center-decoration" transform="translate(30 30)">
+      <!-- 笔记图标 -->
+      <path d="M-10-10h20v20h-20z"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1"
+            stroke-opacity="0.6">
+        <animate attributeName="stroke-opacity" values="0.4;0.7;0.4" dur="3s" repeatCount="indefinite"/>
+      </path>
+      <path d="M-5-5h10M-5 0h10M-5 5h8"
+            stroke="currentColor"
+            stroke-width="1"
+            stroke-opacity="0.6"
+            fill="none">
+        <animate attributeName="stroke-opacity" values="0.4;0.7;0.4" dur="3s" repeatCount="indefinite"/>
+      </path>
+    </g>
+  </g>
+</svg>

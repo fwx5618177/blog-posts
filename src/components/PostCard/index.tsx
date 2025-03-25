@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { PostCardProps } from '../../types';
+import { PostCardProps } from './types';
+import { formatDate } from '../../utils/formatDate';
 import './PostCard.scss';
 
 const PostCard: React.FC<PostCardProps> = ({ post, variant = 'default' }) => {
@@ -17,25 +18,6 @@ const PostCard: React.FC<PostCardProps> = ({ post, variant = 'default' }) => {
     };
   }, []);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-
-    // 在小屏幕和中等屏幕上使用更简短的日期格式
-    if (windowWidth <= 1200) {
-      return new Intl.DateTimeFormat('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-      }).format(date);
-    }
-
-    return new Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    }).format(date);
-  };
-
   // 根据屏幕尺寸确定显示的标签数量
   const getTagsToShow = () => {
     if (windowWidth <= 768) {
@@ -48,6 +30,9 @@ const PostCard: React.FC<PostCardProps> = ({ post, variant = 'default' }) => {
 
   const tagsToShow = getTagsToShow();
 
+  // 根据屏幕尺寸选择日期格式
+  const dateFormat = windowWidth <= 1200 ? 'short' : 'default';
+
   return (
     <article className={`post-card post-card-${variant}`}>
       {post.coverImage ? (
@@ -57,9 +42,6 @@ const PostCard: React.FC<PostCardProps> = ({ post, variant = 'default' }) => {
             style={{ backgroundImage: `url(${post.coverImage})` }}
             aria-label={post.title}
           ></div>
-          {post.featured && variant !== 'compact' && (
-            <span className="post-card-featured-badge">Featured</span>
-          )}
         </Link>
       ) : (
         <Link to={`/blog/${post.slug}`} className="post-card-image-link">
@@ -80,27 +62,16 @@ const PostCard: React.FC<PostCardProps> = ({ post, variant = 'default' }) => {
               </svg>
             </span>
           </div>
-          {post.featured && variant !== 'compact' && (
-            <span className="post-card-featured-badge">Featured</span>
-          )}
         </Link>
       )}
 
       <div className="post-card-content">
         <header className="post-card-header">
-          {post.categories.length > 0 && (
-            <div className="post-card-categories">
-              {post.categories.map(category => (
-                <Link
-                  key={category.id}
-                  to={`/categories/${category.slug}`}
-                  className="post-card-category"
-                >
-                  {category.name}
-                </Link>
-              ))}
-            </div>
-          )}
+          <div className="post-card-categories">
+            <Link to={`/categories/${post.category.slug}`} className="post-card-category">
+              {post.category.name}
+            </Link>
+          </div>
 
           <h2 className="post-card-title">
             <Link to={`/blog/${post.slug}`}>{post.title}</Link>
@@ -142,7 +113,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, variant = 'default' }) => {
                 <line x1="8" y1="2" x2="8" y2="6"></line>
                 <line x1="3" y1="10" x2="21" y2="10"></line>
               </svg>
-              {formatDate(post.publishedAt)}
+              {formatDate(post.publishedAt, dateFormat)}
             </span>
             <span className="post-card-reading-time">
               <svg
@@ -158,7 +129,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, variant = 'default' }) => {
                 <circle cx="12" cy="12" r="10"></circle>
                 <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
-              {post.readingTime} min
+              {post.readingTime}
             </span>
           </div>
         </footer>

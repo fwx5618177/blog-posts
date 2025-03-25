@@ -1,4 +1,5 @@
 import React from 'react';
+import { PostInfo } from '../pages/Blog/types';
 
 // Theme Types
 export type ThemeType = 'light' | 'dark' | 'sepia' | 'high-contrast' | 'dark-high-contrast';
@@ -62,12 +63,6 @@ export interface Comment {
   createdAt: string;
   parentId?: string;
   replies?: Comment[];
-}
-
-// Component Props Types
-export interface PostCardProps {
-  post: Post;
-  variant?: 'default' | 'compact' | 'featured';
 }
 
 export interface PostListProps {
