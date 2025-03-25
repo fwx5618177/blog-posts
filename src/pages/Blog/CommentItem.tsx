@@ -3,6 +3,9 @@ import styles from './comment-item.module.scss';
 import classnames from 'classnames';
 import { Comment } from './types';
 import { formatDate } from '@/utils/formatDate';
+import UserIcon from './icons/UserIcon';
+import ReplyIcon from './icons/ReplyIcon';
+import LikeIcon from './icons/LikeIcon';
 
 const CommentItem: React.FC<{ comment: Comment; level?: number }> = ({ comment, level = 0 }) => {
   const [liked, setLiked] = useState(false);
@@ -40,18 +43,7 @@ const CommentItem: React.FC<{ comment: Comment; level?: number }> = ({ comment, 
           <div className={styles.commentItemAuthorInfo}>
             <span className={styles.commentItemAuthorName}>{comment.author.name}</span>
             <span className={classnames(styles.commentItemPlatform, styles.guest)}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
+              <UserIcon className={styles.commentItemIcon} />
               Verified User
             </span>
           </div>
@@ -63,31 +55,11 @@ const CommentItem: React.FC<{ comment: Comment; level?: number }> = ({ comment, 
       </div>
       <div className={styles.commentItemActions}>
         <button onClick={() => setShowReplyForm(!showReplyForm)}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-          </svg>
+          <ReplyIcon className={styles.commentItemIcon} />
           Reply
         </button>
         <button className={classnames(liked && styles.active)} onClick={handleLike}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill={liked ? 'currentColor' : 'none'}
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
-          </svg>
+          <LikeIcon className={styles.commentItemIcon} filled={liked} />
           Like{likeCount > 0 && ` (${likeCount})`}
         </button>
       </div>
