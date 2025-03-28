@@ -13,6 +13,8 @@ import CommentSection from './CommentSection';
 import RelatedPosts from './RelatedPosts';
 import PostNavigation from './PostNavigation';
 import BlogNotFound from './BlogNotFound';
+import PostContent from './PostContent';
+import Excerpt from './Excerpt';
 
 const BlogDetailPage: React.FC = () => {
   const { slug = '' } = useParams<{ slug: string }>();
@@ -59,10 +61,7 @@ const BlogDetailPage: React.FC = () => {
             <img src={post.featuredImage} alt={post.title} />
           </div>
 
-          {/* Post Excerpt/Introduction */}
-          <div className={styles.postExcerpt}>
-            <p>{post.excerpt}</p>
-          </div>
+          <Excerpt excerpt={post.excerpt} />
 
           {/* Tags */}
           <div className={classnames(styles.postTags, styles.postTagsHeader)}>
@@ -74,7 +73,7 @@ const BlogDetailPage: React.FC = () => {
           </div>
 
           {/* Post Content */}
-          <div className={styles.postContent} dangerouslySetInnerHTML={{ __html: post.content }} />
+          <PostContent content={post.content} />
 
           {/* Post Conclusion */}
           <div className={styles.postConclusion}>
