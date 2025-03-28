@@ -1,4 +1,4 @@
-import styles from './index.module.scss';
+import styles from './post-navigation.module.scss';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import { PostDetail } from './types';

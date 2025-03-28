@@ -1,4 +1,4 @@
-import styles from './index.module.scss';
+import styles from './related-posts.module.scss';
 import { Link } from 'react-router-dom';
 import { PostDetail } from './types';
 import { formatDate } from '@/utils/formatDate';

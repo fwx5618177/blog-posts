@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import classnames from 'classnames';
-import styles from './index.module.scss';
+import styles from './blog-detail.module.scss';
 import {
   MOCK_POST_DETAILS,
   MOCK_COMMENTS,

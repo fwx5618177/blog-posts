@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Comment } from './types';
 import CommentItem from './CommentItem';
-import styles from './index.module.scss';
+import styles from './comment-section.module.scss';
 import classnames from 'classnames';
 
 const CommentSection: React.FC<{ comments: Comment[] }> = ({ comments }) => {
