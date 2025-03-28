@@ -1,4 +1,4 @@
-import FileIcon from './FileIcon';
+import FileIcon from './icons/FileIcon';
 import classnames from 'classnames';
 import styles from './blog-not-found.module.scss';
 import { Link, useParams } from 'react-router-dom';
