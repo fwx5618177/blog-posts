@@ -1,0 +1,162 @@
+@use "../../styles/variables" as variables;
+@use "../../styles/mixins" as mixins;
+
+.categories-page {
+  padding: var(--spacing-8) 0;
+
+  .container {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-4);
+  }
+
+  .categories-header {
+    text-align: center;
+    margin-bottom: var(--spacing-12);
+
+    .categories-title {
+      font-size: var(--font-size-4xl);
+      color: var(--color-primary);
+      margin-bottom: var(--spacing-4);
+      font-weight: var(--font-weight-bold);
+    }
+
+    .categories-description {
+      font-size: var(--font-size-lg);
+      color: var(--color-text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: var(--line-height-relaxed);
+    }
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-8);
+    margin-bottom: var(--spacing-12);
+  }
+}
+
+.category-card {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  background: var(--color-card);
+  border: var(--border-width-thin) solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  height: 100%;
+  transition: all var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow, border-color;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    transition: opacity var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-primary-light);
+    text-decoration: none;
+
+    &::after {
+      opacity: 1;
+    }
+
+    .category-image img {
+      transform: scale(1.05);
+    }
+
+    .category-title {
+      color: var(--color-primary);
+    }
+
+    .post-count {
+      background-color: var(--color-primary);
+      color: var(--color-text-primary);
+      transform: translateY(-1px);
+    }
+  }
+
+  .category-image {
+    position: relative;
+    padding-top: 56.25%; // 16:9 aspect ratio
+    overflow: hidden;
+    background-color: var(--color-background-secondary);
+    border-bottom: var(--border-width-thin) solid var(--color-border);
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.02) 100%);
+    }
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+  }
+
+  .category-content {
+    position: relative;
+    padding: var(--spacing-6);
+    background: linear-gradient(to bottom, var(--color-card) 0%, var(--color-background) 100%);
+
+    .category-title {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--spacing-2);
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-semibold);
+      transition: color var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .category-description {
+      font-size: var(--font-size-md);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--spacing-4);
+      line-height: var(--line-height-normal);
+      opacity: 0.9;
+    }
+
+    .category-meta {
+      display: flex;
+      align-items: center;
+      font-size: var(--font-size-sm);
+
+      .post-count {
+        display: inline-flex;
+        align-items: center;
+        padding: var(--spacing-1) var(--spacing-3);
+        color: var(--color-text-primary);
+        font-weight: var(--font-weight-medium);
+        border-radius: var(--border-radius-full);
+        transition: all var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform, background-color, color;
+
+        &::before {
+          content: "";
+          display: inline-block;
+          width: 4px;
+          height: 4px;
+          margin-right: var(--spacing-2);
+          background-color: currentColor;
+          border-radius: 50%;
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}

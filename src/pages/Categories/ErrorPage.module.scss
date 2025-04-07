@@ -1,0 +1,83 @@
+@use "../../styles/variables" as variables;
+@use "../../styles/mixins" as mixins;
+
+.error-page-container {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--spacing-8);
+}
+
+.error-content {
+  max-width: 600px;
+  margin: 0 auto;
+
+  .error-icon {
+    margin-bottom: var(--spacing-6);
+    color: var(--color-primary);
+
+    svg {
+      width: 64px;
+      height: 64px;
+    }
+  }
+
+  .error-title {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-bold);
+
+    &.highlight {
+      color: var(--color-primary);
+    }
+  }
+
+  .error-message {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-8);
+    line-height: var(--line-height-relaxed);
+
+    .highlight {
+      color: var(--color-primary);
+      font-weight: var(--font-weight-medium);
+    }
+  }
+
+  .error-actions {
+    display: flex;
+    gap: var(--spacing-4);
+    justify-content: center;
+
+    .button {
+      padding: var(--spacing-3) var(--spacing-6);
+      border-radius: var(--border-radius-lg);
+      font-weight: var(--font-weight-medium);
+      text-decoration: none;
+      transition: all var(--transition-fast) var(--transition-timing-function);
+
+      &-primary {
+        background-color: var(--color-primary);
+        color: var(--color-text-inverse);
+
+        &:hover {
+          background-color: var(--color-primary-dark);
+        }
+      }
+
+      &-secondary {
+        background-color: transparent;
+        border: var(--border-width-thin) solid var(--color-primary);
+        color: var(--color-primary);
+
+        &:hover {
+          background-color: var(--color-primary);
+          color: var(--color-text-inverse);
+        }
+      }
+    }
+  }
+}
