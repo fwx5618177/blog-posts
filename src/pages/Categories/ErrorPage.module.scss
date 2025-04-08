@@ -2,36 +2,78 @@
 @use "../../styles/mixins" as mixins;
 
 .error-page-container {
-  min-height: 60vh;
+  min-height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: var(--spacing-8);
+  background: linear-gradient(145deg, var(--color-background) 0%, var(--color-background-alt) 100%);
+
+  @include mixins.mobile {
+    min-height: 60vh;
+    padding: var(--spacing-4);
+  }
 }
 
 .error-content {
   max-width: 600px;
   margin: 0 auto;
+  padding: var(--spacing-8);
+  background: var(--color-surface);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(20px);
+  opacity: 0;
+  animation: slideUp 0.6s ease-out forwards;
 
   .error-icon {
-    margin-bottom: var(--spacing-6);
+    margin-bottom: var(--spacing-8);
     color: var(--color-primary);
+    transform: scale(0.8);
+    opacity: 0;
+    animation: scaleIn 0.5s ease-out 0.3s forwards;
 
     svg {
-      width: 64px;
-      height: 64px;
+      width: 80px;
+      height: 80px;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+      transition: transform var(--transition-normal) ease-out;
+
+      &:hover {
+        transform: scale(1.1) rotate(-5deg);
+      }
+    }
+
+    @include mixins.mobile {
+      margin-bottom: var(--spacing-6);
+
+      svg {
+        width: 64px;
+        height: 64px;
+      }
     }
   }
 
   .error-title {
-    font-size: var(--font-size-3xl);
-    margin-bottom: var(--spacing-4);
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-6);
     color: var(--color-text-primary);
     font-weight: var(--font-weight-bold);
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn 0.5s ease-out 0.4s forwards;
 
     &.highlight {
-      color: var(--color-primary);
+      background: linear-gradient(120deg, var(--color-primary), var(--color-secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    @include mixins.mobile {
+      font-size: var(--font-size-2xl);
+      margin-bottom: var(--spacing-4);
     }
   }
 
@@ -40,10 +82,35 @@
     color: var(--color-text-secondary);
     margin-bottom: var(--spacing-8);
     line-height: var(--line-height-relaxed);
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn 0.5s ease-out 0.5s forwards;
 
     .highlight {
       color: var(--color-primary);
       font-weight: var(--font-weight-medium);
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--color-primary);
+        transform: scaleX(0);
+        transition: transform var(--transition-normal) ease-out;
+      }
+
+      &:hover::after {
+        transform: scaleX(1);
+      }
+    }
+
+    @include mixins.mobile {
+      font-size: var(--font-size-base);
+      margin-bottom: var(--spacing-6);
     }
   }
 
@@ -51,33 +118,107 @@
     display: flex;
     gap: var(--spacing-4);
     justify-content: center;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn 0.5s ease-out 0.6s forwards;
+
+    @include mixins.mobile {
+      flex-direction: column;
+      gap: var(--spacing-3);
+    }
 
     .button {
-      padding: var(--spacing-3) var(--spacing-6);
-      border-radius: var(--border-radius-lg);
+      padding: var(--spacing-3) var(--spacing-8);
+      border-radius: var(--border-radius-full);
       font-weight: var(--font-weight-medium);
       text-decoration: none;
       transition: all var(--transition-fast) var(--transition-timing-function);
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition:
+          width 0.6s ease-out,
+          height 0.6s ease-out;
+      }
+
+      &:hover::before {
+        width: 300px;
+        height: 300px;
+      }
 
       &-primary {
-        background-color: var(--color-primary);
+        background: linear-gradient(120deg, var(--color-primary), var(--color-primary-dark));
         color: var(--color-text-inverse);
+        box-shadow: var(--shadow-md);
 
         &:hover {
-          background-color: var(--color-primary-dark);
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-lg);
+        }
+
+        &:active {
+          transform: translateY(0);
         }
       }
 
       &-secondary {
-        background-color: transparent;
-        border: var(--border-width-thin) solid var(--color-primary);
+        background: transparent;
+        border: 2px solid var(--color-primary);
         color: var(--color-primary);
 
         &:hover {
-          background-color: var(--color-primary);
+          background: var(--color-primary);
           color: var(--color-text-inverse);
+          transform: translateY(-2px);
+        }
+
+        &:active {
+          transform: translateY(0);
         }
       }
     }
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

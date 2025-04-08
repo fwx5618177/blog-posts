@@ -38,21 +38,32 @@ const CategoryDetailPage: React.FC = () => {
   return (
     <div className={styles['category-detail-page']}>
       <div className={styles.container}>
-        <div className={styles['category-header']}>
-          <h1 className={styles['category-title']}>
-            Category: <span>{category.name}</span>
-          </h1>
-          <p className={styles['category-description']}>{category.description}</p>
-          <div className={styles['category-meta']}>
-            <span className={styles['post-count']}>
-              {category.postCount} articles in this category
-            </span>
+        {/* Enhanced Header Section */}
+        <header className={styles['category-header']}>
+          <div className={styles['header-content']}>
+            <h1 className={styles['category-title']}>
+              Exploring <span>{category.name}</span>
+            </h1>
+            <p className={styles['category-description']}>{category.description}</p>
+            <div className={styles['category-meta']}>
+              <span className={styles['post-count']}>{category.postCount} Articles</span>
+              <Link to="/categories" className={styles['browse-all']}>
+                Browse All Categories
+              </Link>
+            </div>
           </div>
-        </div>
+        </header>
 
-        <div className={styles['category-content']}>
+        {/* Main Content Section */}
+        <main className={styles['category-content']}>
           {posts.length > 0 ? (
             <div className={styles['category-posts']}>
+              <div className={styles['posts-header']}>
+                <h2 className={styles['posts-title']}>Latest Articles</h2>
+                <p className={styles['posts-subtitle']}>
+                  Discover our latest content in {category.name}
+                </p>
+              </div>
               <div className={styles['posts-grid']}>
                 {posts.map(post => (
                   <PostCard key={post.id} post={post} />
@@ -76,13 +87,15 @@ const CategoryDetailPage: React.FC = () => {
               }}
             />
           )}
-        </div>
+        </main>
 
-        <div className={styles['category-footer']}>
+        {/* Footer Navigation */}
+        <footer className={styles['category-footer']}>
           <Link to="/categories" className={styles['back-link']}>
-            ← Back to Categories
+            <span className={styles['back-icon']}>←</span>
+            <span>Back to Categories</span>
           </Link>
-        </div>
+        </footer>
       </div>
     </div>
   );
