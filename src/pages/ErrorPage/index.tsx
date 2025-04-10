@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouteError, isRouteErrorResponse, Link } from 'react-router-dom';
-import './ErrorPage.scss';
+import ErrorIcon from './components/ErrorIcon';
+import styles from './error-page.module.scss';
 
 const ErrorPage: React.FC = () => {
   const error = useRouteError();
@@ -20,34 +21,58 @@ const ErrorPage: React.FC = () => {
   }
 
   return (
-    <div className="error-page-container">
-      <div className="error-content">
-        <div className="error-icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="12"></line>
-            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-          </svg>
-        </div>
-        <div className="error-status">{errorStatus}</div>
-        <h1 className="error-title highlight">Oops! Something went wrong</h1>
-        <p className="error-message">{errorMessage}</p>
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <ErrorIcon className={styles.icon} />
+        <div className={styles.status}>{errorStatus}</div>
+        <div
+          className={styles.statusSVG}
+          aria-hidden="true"
+          role="img"
+          aria-label={`Error ${errorStatus}`}
+        ></div>
+        <h1 className={styles.title}>Oops! Something went wrong</h1>
+        <p className={styles.message}>{errorMessage}</p>
 
-        <div className="error-actions">
-          <button onClick={() => window.history.back()} className="button button-secondary">
-            Go Back
+        <div className={styles.actions}>
+          <button
+            onClick={() => window.history.back()}
+            className={styles.secondaryButton}
+            aria-label="Go back to previous page"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Go Back</span>
           </button>
 
-          <Link to="/" className="button button-primary">
-            Go to Homepage
+          <Link to="/" className={styles.primaryButton} aria-label="Go to homepage">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span>Go to Homepage</span>
           </Link>
         </div>
       </div>
