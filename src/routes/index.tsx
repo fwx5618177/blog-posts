@@ -7,7 +7,6 @@ import ServerErrorPage from '../pages/ServerErrorPage';
 import MaintenancePage from '../pages/MaintenancePage';
 import MessageDemoPage from '../pages/MessageDemo';
 import CodeBlockDemoPage from '../pages/CodeBlockDemo';
-import ErrorTestPage from '../pages/ErrorTest';
 import { lazy, Suspense } from 'react';
 import Loading from '../components/Loading';
 
@@ -150,10 +149,6 @@ const routes: RouteObject[] = [
       {
         path: 'maintenance',
         element: <MaintenancePage />,
-      },
-      {
-        path: 'error-test',
-        element: <ErrorTestPage />,
       },
       {
         path: '*',

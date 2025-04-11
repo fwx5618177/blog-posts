@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Enhanced gradients -->
+    <linearGradient id="astronautGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:#e0e0e0"/>
+    </linearGradient>
+
+    <linearGradient id="visorGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:rgba(41, 128, 185, 0.9)"/>
+      <stop offset="100%" style="stop-color:rgba(52, 152, 219, 0.9)"/>
+    </linearGradient>
+
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3498DB"/>
+      <stop offset="100%" style="stop-color:#2980B9"/>
+    </linearGradient>
+
+    <!-- Enhanced glow effects -->
+    <filter id="spaceGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Stars -->
+  <g class="stars">
+    <circle cx="50" cy="50" r="1" fill="#fff" class="star"/>
+    <circle cx="150" cy="80" r="2" fill="#fff" class="star"/>
+    <circle cx="280" cy="120" r="1" fill="#fff" class="star"/>
+    <circle cx="320" cy="250" r="2" fill="#fff" class="star"/>
+    <circle cx="200" cy="300" r="1" fill="#fff" class="star"/>
+    <circle cx="100" cy="200" r="1" fill="#fff" class="star"/>
+    <circle cx="350" cy="150" r="2" fill="#fff" class="star"/>
+  </g>
+
+  <!-- Astronaut -->
+  <g class="astronaut" transform="translate(200, 220)">
+    <!-- Oxygen tubes -->
+    <path d="M-20,10 C-30,20 -35,40 -25,50" stroke="#fff" stroke-width="2" fill="none" class="tube"/>
+    <path d="M20,10 C30,20 35,40 25,50" stroke="#fff" stroke-width="2" fill="none" class="tube"/>
+
+    <!-- Backpack -->
+    <rect x="-15" y="10" width="30" height="40" rx="5" fill="#95A5A6" class="backpack"/>
+
+    <!-- Body -->
+    <path d="M-25,-10 C-30,10 -20,40 0,50 C20,40 30,10 25,-10 Z"
+          fill="url(#astronautGradient)"
+          class="body"/>
+
+    <!-- Arms -->
+    <path d="M-25,0 C-40,10 -45,30 -35,40"
+          stroke="#fff"
+          stroke-width="8"
+          stroke-linecap="round"
+          fill="none"
+          class="arm left"/>
+    <path d="M25,0 C40,10 45,30 35,40"
+          stroke="#fff"
+          stroke-width="8"
+          stroke-linecap="round"
+          fill="none"
+          class="arm right"/>
+
+    <!-- Helmet -->
+    <circle cx="0" cy="0" r="30"
+            fill="url(#astronautGradient)"
+            class="helmet"/>
+
+    <!-- Visor -->
+    <path d="M-20,-10 Q0,-25 20,-10 Q25,0 20,10 Q0,25 -20,10 Q-25,0 -20,-10"
+          fill="url(#visorGradient)"
+          class="visor"/>
+
+    <!-- Helmet details -->
+    <path d="M-20,-20 L20,-20"
+          stroke="#fff"
+          stroke-width="2"
+          fill="none"/>
+  </g>
+
+  <!-- 404 Text -->
+  <g class="error-text" transform="translate(200, 120)">
+    <text text-anchor="middle"
+          font-size="80"
+          font-weight="bold"
+          fill="url(#textGradient)"
+          filter="url(#spaceGlow)"
+          class="main-text">
+      404
+    </text>
+    <text text-anchor="middle"
+          y="40"
+          font-size="20"
+          fill="#fff"
+          class="subtext">
+      Lost in Space
+    </text>
+  </g>
+
+  <!-- Floating elements -->
+  <g class="floating-elements">
+    <circle cx="100" cy="150" r="4" fill="#3498DB" class="particle"/>
+    <circle cx="300" cy="250" r="3" fill="#2980B9" class="particle"/>
+    <path d="M150,100 L160,110 L150,120 L140,110 Z" fill="#fff" class="star-shape"/>
+    <path d="M250,200 L260,210 L250,220 L240,210 Z" fill="#fff" class="star-shape"/>
+  </g>
+</svg>
