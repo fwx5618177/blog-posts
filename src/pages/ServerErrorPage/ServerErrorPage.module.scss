@@ -1,0 +1,154 @@
+@use "../../styles/animations.scss";
+@use "../../styles/variables.scss";
+@use "../../styles/mixins.scss";
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255, 75, 75, 0.1) 0%, transparent 70%);
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 3rem;
+    border-radius: 20px;
+    max-width: 800px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+
+    .illustration {
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 1rem;
+      animation: float 6s ease-in-out infinite;
+
+      .serverSvg {
+        width: 100%;
+        height: 400px;
+        background: url("./server-error.svg") center/contain no-repeat;
+        filter: drop-shadow(0 0 10px rgba(255, 75, 75, 0.3));
+      }
+    }
+
+    .textContent {
+      text-align: center;
+      color: white;
+
+      .title {
+        margin-bottom: 1.5rem;
+
+        .statusCode {
+          display: block;
+          font-size: 4rem;
+          font-weight: bold;
+          background: linear-gradient(135deg, #ff6b6b 0%, #ff0000 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: glow 2s ease-in-out infinite;
+        }
+
+        .message {
+          display: block;
+          font-size: 1.5rem;
+          margin-top: 0.5rem;
+          color: #ff4b4b;
+        }
+      }
+
+      .description {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 2rem;
+        line-height: 1.6;
+      }
+
+      .actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+
+        .button {
+          padding: 0.8rem 1.5rem;
+          font-size: 1rem;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          outline: none;
+
+          &.refreshButton {
+            background: rgba(255, 75, 75, 0.2);
+            border: 1px solid #ff4b4b;
+            color: #ff4b4b;
+
+            &:hover {
+              background: rgba(255, 75, 75, 0.3);
+            }
+          }
+
+          &.homeButton {
+            background: #ff4b4b;
+            border: 1px solid #ff4b4b;
+            color: white;
+
+            &:hover {
+              background: #ff3333;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 5px rgba(255, 75, 75, 0.7));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(255, 75, 75, 0.9));
+  }
+}
