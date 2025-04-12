@@ -1,5 +1,4 @@
 import React from 'react';
-import { PostInfo } from '../pages/Blog/types';
 
 // Theme Types
 export type ThemeType = 'light' | 'dark' | 'sepia' | 'high-contrast' | 'dark-high-contrast';
