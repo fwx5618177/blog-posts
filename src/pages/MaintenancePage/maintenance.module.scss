@@ -1,0 +1,569 @@
+@use "../../styles/mixins" as mixins;
+
+// 变量定义 - 方便维护
+$primary-color: var(--color-primary);
+$primary-rgb: var(--color-primary-rgb);
+$card-bg-opacity: 0.05;
+$card-border-opacity: 0.1;
+$text-color: rgba(255, 255, 255, 0.95);
+$text-color-secondary: rgba(255, 255, 255, 0.9);
+$border-radius: var(--border-radius-2xl);
+$transition-bezier: cubic-bezier(0.34, 1.56, 0.64, 1);
+$base-shadow:
+  0 20px 40px rgba(0, 0, 0, 0.08),
+  0 5px 15px rgba(0, 0, 0, 0.03);
+
+// 变量
+$pulse-animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+$float-animation: float 6s ease-in-out infinite;
+$shine-animation: shine 2.5s ease-in-out infinite;
+
+// 基础动画
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes shine {
+  0% {
+    box-shadow: 0 0 10px rgba(var(--color-primary-rgb), 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(var(--color-primary-rgb), 0.6);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(var(--color-primary-rgb), 0.3);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-15px);
+  }
+  60% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate-reverse {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-150%) rotate(30deg);
+  }
+  100% {
+    transform: translateX(150%) rotate(30deg);
+  }
+}
+
+@keyframes gradient-text {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+// 主容器 - 集成背景和布局
+.maintenancePage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: var(--spacing-6);
+  position: relative;
+  overflow: hidden;
+
+  // 背景渐变 - 使用CSS变量提高性能
+  background: linear-gradient(
+    135deg,
+    rgba(9, 9, 121, 0.15) 0%,
+    rgba(0, 48, 142, 0.1) 50%,
+    rgba(0, 95, 173, 0.15) 100%
+  );
+
+  // 星云效果 - 使用伪元素避免额外DOM
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(37, 99, 235, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 40% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+    z-index: -1;
+    backdrop-filter: blur(80px);
+    -webkit-backdrop-filter: blur(80px);
+    // 添加圆角 - 整体效果更现代
+    border-radius: 24px;
+    // 底部圆角更大
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+  }
+
+  // 纹理效果 - 使用data URI避免额外请求
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='rgba(255,255,255,0.03)' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+    z-index: -1;
+    opacity: 0.3;
+    pointer-events: none;
+    // 共享圆角
+    border-radius: 24px;
+  }
+
+  // 齿轮背景 - 使用伪元素代替额外的DOM元素
+  .contentWrapper::before {
+    content: "";
+    position: absolute;
+    top: -15%;
+    right: -15%;
+    width: 70%;
+    height: 70%;
+    background-image: url("./maintenance.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.1;
+    z-index: -1;
+    transform-origin: center;
+    animation: rotate 80s linear infinite;
+    will-change: transform;
+  }
+
+  .contentWrapper::after {
+    content: "";
+    position: absolute;
+    bottom: -10%;
+    left: -10%;
+    width: 60%;
+    height: 60%;
+    background-image: url("./maintenance.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.1;
+    z-index: -1;
+    transform-origin: center;
+    animation: rotate-reverse 70s linear infinite;
+    will-change: transform;
+  }
+
+  @include mixins.theme-transition;
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes rotate-reverse {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(-360deg);
+    }
+  }
+}
+
+// 内容包装器 - 优化DOM结构
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1000px;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+
+  @include mixins.mobile {
+    gap: var(--spacing-6);
+  }
+}
+
+// 图标部分 - 优化渲染性能
+.iconSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--spacing-6);
+  animation: fadeInDown 1s ease-out;
+  will-change: transform, opacity;
+
+  @include mixins.mobile {
+    margin-bottom: var(--spacing-4);
+  }
+}
+
+// 内容容器 - 优化性能
+.container {
+  max-width: 800px;
+  width: 100%;
+  padding: var(--spacing-8);
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  animation: fadeInUp 0.8s ease-out;
+  will-change: transform, opacity;
+
+  // 玻璃态效果 - 使用硬件加速
+  background: rgba(255, 255, 255, $card-bg-opacity);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-radius: $border-radius;
+  border: 1px solid rgba(255, 255, 255, $card-border-opacity);
+  box-shadow: $base-shadow;
+
+  // 边缘光效果
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: $border-radius;
+    padding: 1.5px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  // 悬浮效果 - 使用硬件加速
+  transition:
+    transform 0.6s $transition-bezier,
+    box-shadow 0.6s ease;
+  will-change: transform, box-shadow;
+
+  &:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow:
+      0 25px 50px rgba(0, 0, 0, 0.12),
+      0 10px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  @include mixins.mobile {
+    padding: var(--spacing-4);
+    max-width: 95%;
+  }
+}
+
+// 图标样式 - 使用硬件加速
+.icon {
+  width: 220px;
+  height: 220px;
+  margin: 0 auto var(--spacing-4);
+  color: $primary-color;
+  filter: drop-shadow(0 10px 25px rgba($primary-rgb, 0.5));
+  background-image: url("./maintenance.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  animation: float 6s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0); // 硬件加速
+
+  @include mixins.mobile {
+    width: 180px;
+    height: 180px;
+    margin-bottom: var(--spacing-2);
+  }
+}
+
+// 标题样式 - 性能优化
+.title {
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-2);
+  position: relative;
+  display: inline-block;
+  letter-spacing: 1px;
+
+  // 现代渐变文字
+  background: linear-gradient(
+    90deg,
+    #4f8dff 0%,
+    #8b5cf6 25%,
+    #ec4899 50%,
+    #f97316 75%,
+    #4f8dff 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-text 8s linear infinite;
+  will-change: background-position;
+
+  // 文字发光效果
+  text-shadow:
+    0 0 30px rgba($primary-rgb, 0.3),
+    0 0 60px rgba($primary-rgb, 0.1);
+
+  @include mixins.mobile {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+// 消息样式
+.message {
+  font-size: var(--font-size-lg);
+  color: $text-color;
+  margin-bottom: var(--spacing-8);
+  line-height: var(--line-height-relaxed);
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: fadeInUp 0.8s ease-out 0.3s backwards;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.3px;
+  will-change: opacity, transform;
+
+  @include mixins.mobile {
+    font-size: var(--font-size-md);
+  }
+}
+
+// 信息区块样式
+.info {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--border-radius-xl);
+  padding: var(--spacing-6);
+  margin-bottom: var(--spacing-8);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+  position: relative;
+  animation: fadeInUp 0.8s ease-out 0.6s backwards;
+  overflow: hidden;
+  will-change: opacity, transform;
+
+  // 光滑扫光效果
+  &::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    transform: rotate(30deg);
+    animation: shimmer 8s infinite;
+    pointer-events: none;
+    will-change: transform;
+  }
+
+  @include mixins.mobile {
+    padding: var(--spacing-4);
+  }
+}
+
+// 时间信息样式
+.timeInfo {
+  position: relative;
+  z-index: 1;
+
+  h3 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: $text-color;
+    margin-bottom: var(--spacing-2);
+  }
+
+  p {
+    font-size: var(--font-size-md);
+    color: $text-color-secondary;
+    margin: 0;
+  }
+}
+
+// 倒计时文本
+.countdownText {
+  font-weight: var(--font-weight-bold);
+  color: $primary-color;
+  background: rgba($primary-rgb, 0.15);
+  padding: 4px 12px;
+  border-radius: var(--border-radius-md);
+  margin: 0 3px;
+  display: inline-block;
+  min-width: 40px;
+  text-align: center;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  box-shadow: 0 0 15px rgba($primary-rgb, 0.3);
+  will-change: opacity;
+}
+
+// 按钮样式
+.btn {
+  min-width: 200px;
+  animation: bounce 1s ease-out 1s backwards;
+  will-change: transform;
+
+  &.btnPrimary {
+    background: linear-gradient(135deg, #4f8dff 0%, #3b82f6 50%, #2563eb 100%);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-full);
+    padding: var(--spacing-3) var(--spacing-6);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all 0.4s $transition-bezier;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.5px;
+    font-size: var(--font-size-md);
+    transform: translateZ(0); // 硬件加速
+
+    // 按钮内部发光效果
+    box-shadow:
+      0 8px 25px rgba(59, 130, 246, 0.4),
+      0 4px 10px rgba(59, 130, 246, 0.2),
+      inset 0 1px 1px rgba(255, 255, 255, 0.3);
+
+    // 扫光效果
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: all 0.8s;
+      will-change: transform;
+    }
+
+    &:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow:
+        0 15px 35px rgba(59, 130, 246, 0.5),
+        0 10px 15px rgba(59, 130, 246, 0.2),
+        inset 0 1px 1px rgba(255, 255, 255, 0.4);
+
+      &::before {
+        left: 100%;
+      }
+    }
+
+    &:active {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow:
+        0 5px 15px rgba(59, 130, 246, 0.3),
+        0 2px 5px rgba(59, 130, 246, 0.2);
+    }
+
+    &:disabled {
+      background: linear-gradient(135deg, #93c5fd 0%, #60a5fa 50%, #3b82f6 100%);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow:
+        0 2px 8px rgba(59, 130, 246, 0.2),
+        0 0 0 1px rgba(59, 130, 246, 0.1);
+      opacity: 0.7;
+
+      &::before {
+        display: none;
+      }
+    }
+  }
+
+  @include mixins.mobile {
+    width: 100%;
+    max-width: 300px;
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+}

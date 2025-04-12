@@ -1,41 +1,103 @@
-import React from 'react';
-import './MaintenancePage.scss';
+import React, { useState, useEffect, memo } from 'react';
+import classnames from 'classnames';
+import styles from './maintenance.module.scss';
 
+/**
+ * 维护图标组件 - 使用memo优化性能
+ */
+const MaintenanceIcon = memo(() => {
+  return <div className={styles.icon} aria-hidden="true" />;
+});
+
+MaintenanceIcon.displayName = 'MaintenanceIcon';
+
+/**
+ * 倒计时组件 - 使用memo优化性能
+ */
+const CountdownTimer = memo(({ count, onComplete }: { count: number; onComplete: () => void }) => {
+  useEffect(() => {
+    if (count === 0) {
+      onComplete();
+    }
+  }, [count, onComplete]);
+
+  return <span className={styles.countdownText}>{count}</span>;
+});
+
+CountdownTimer.displayName = 'CountdownTimer';
+
+/**
+ * 维护页面组件
+ * 当网站进行计划维护时显示
+ * 包含动画和交互元素，使用性能优化
+ */
 const MaintenancePage: React.FC = () => {
+  const [countdown, setCountdown] = useState<number>(60);
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
+
+  // 自动倒计时定时器
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCountdown(prev => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  // 处理刷新按钮点击
+  const handleRefresh = () => {
+    if (isRefreshing) return;
+
+    setIsRefreshing(true);
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  };
+
+  // 处理倒计时结束
+  const handleCountdownComplete = () => {
+    if (!isRefreshing) {
+      handleRefresh();
+    }
+  };
+
   return (
-    <div className="maintenance-page">
-      <div className="maintenance-container">
-        <div className="maintenance-icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <circle cx="12" cy="12" r="7"></circle>
-            <polyline points="12 9 12 12 13.5 13.5"></polyline>
-            <path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7l.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"></path>
-          </svg>
+    <div className={styles.maintenancePage}>
+      <div className={styles.contentWrapper}>
+        {/* 维护图标区域 */}
+        <div className={styles.iconSection}>
+          <MaintenanceIcon />
+          <h1 className={styles.title}>系统维护中</h1>
         </div>
-        <h1 className="maintenance-title">We'll Be Right Back</h1>
-        <p className="maintenance-message">
-          Our site is currently undergoing scheduled maintenance. We apologize for the inconvenience
-          and appreciate your patience. Please check back soon.
-        </p>
 
-        <div className="maintenance-info">
-          <div className="maintenance-time">
-            <h3>Estimated Completion</h3>
-            <p>We expect to be back online in a few hours.</p>
+        {/* 信息卡片 */}
+        <div className={styles.container}>
+          <p className={styles.message}>
+            我们的网站正在进行升级维护。对给您带来的不便，我们深表歉意并感谢您的耐心等待。
+            我们的技术团队正在努力提升系统性能与用户体验。
+          </p>
+
+          <div className={styles.info}>
+            <div className={styles.timeInfo}>
+              <h3>预计完成时间</h3>
+              <p>
+                我们预计很快就会恢复服务。页面将在{' '}
+                <CountdownTimer count={countdown} onComplete={handleCountdownComplete} />{' '}
+                秒后自动刷新。
+              </p>
+            </div>
           </div>
-        </div>
 
-        <button className="btn btn-primary" onClick={() => window.location.reload()}>
-          Refresh Page
-        </button>
+          <button
+            className={classnames(styles.btn, styles.btnPrimary)}
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+            aria-label="刷新页面"
+          >
+            {isRefreshing ? '正在刷新...' : '立即刷新'}
+          </button>
+        </div>
       </div>
     </div>
   );
