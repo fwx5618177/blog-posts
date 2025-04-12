@@ -1,365 +1,40 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import classnames from 'classnames';
 import PostCard from '../../components/PostCard';
-// import { useTheme } from '../../contexts/ThemeContext';
-import { PostInfo } from '../Blog/types';
-import './Home.scss';
+import styles from './home.module.scss';
+import { homePageData } from './mockData';
 
-// Mock data for demonstration
-const FEATURED_POSTS: PostInfo[] = [
-  {
-    id: '1',
-    title: 'Getting Started with React and TypeScript',
-    slug: 'getting-started-with-react-typescript',
-    excerpt:
-      'Learn how to set up a new project with React and TypeScript to build type-safe applications.',
-    publishedAt: '2023-03-15T10:00:00Z',
-    author: {
-      id: '1',
-      name: 'Jane Doe',
-      avatar:
-        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
-      bio: 'Frontend developer passionate about React and TypeScript',
-    },
-    category: { id: '1', name: 'React', slug: 'react' },
-    tags: [
-      { id: '1', name: 'TypeScript', slug: 'typescript' },
-      { id: '7', name: 'JavaScript', slug: 'javascript' },
-    ],
-    readingTime: '5 min read',
-    status: 'published',
-    coverImage:
-      'https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    featuredImage:
-      'https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-  },
-  {
-    id: '2',
-    title: 'Advanced CSS Techniques for Modern Layouts',
-    slug: 'advanced-css-techniques',
-    excerpt:
-      'Explore modern CSS techniques like Grid, Flexbox, and CSS Variables to create responsive layouts.',
-    publishedAt: '2023-03-10T14:30:00Z',
-    author: {
-      id: '1',
-      name: 'Jane Doe',
-      avatar:
-        'https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
-      bio: 'CSS expert with a passion for modern web design',
-    },
-    category: { id: '2', name: 'CSS', slug: 'css' },
-    tags: [
-      { id: '2', name: 'Web Design', slug: 'web-design' },
-      { id: '8', name: 'HTML', slug: 'html' },
-    ],
-    readingTime: '8 min read',
-    status: 'published',
-    coverImage:
-      'https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    featuredImage:
-      'https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-  },
-];
-
-const RECENT_POSTS: PostInfo[] = [
-  {
-    id: '3',
-    title: 'Building a REST API with Node.js and Express',
-    slug: 'building-rest-api-nodejs-express',
-    excerpt:
-      'Learn how to create a RESTful API using Node.js and Express with MongoDB as the database.',
-    publishedAt: '2023-03-05T09:15:00Z',
-    author: {
-      id: '1',
-      name: 'Jane Doe',
-      avatar:
-        'https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
-      bio: 'Backend developer specializing in Node.js and Express',
-    },
-    category: { id: '3', name: 'Node.js', slug: 'nodejs' },
-    tags: [
-      { id: '3', name: 'API', slug: 'api' },
-      { id: '9', name: 'Backend', slug: 'backend' },
-    ],
-    readingTime: '10 min read',
-    status: 'published',
-    coverImage:
-      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    featuredImage:
-      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-  },
-  {
-    id: '4',
-    title: 'Introduction to State Management with Redux',
-    slug: 'introduction-state-management-redux',
-    excerpt:
-      'Understand the core concepts of Redux and how to implement it in your React applications.',
-    publishedAt: '2023-03-01T11:45:00Z',
-    author: {
-      id: '1',
-      name: 'Jane Doe',
-      avatar:
-        'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
-      bio: 'Frontend architect with expertise in state management',
-    },
-    category: { id: '1', name: 'React', slug: 'react' },
-    tags: [
-      { id: '4', name: 'Redux', slug: 'redux' },
-      { id: '7', name: 'JavaScript', slug: 'javascript' },
-    ],
-    readingTime: '7 min read',
-    status: 'published',
-    coverImage:
-      'https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    featuredImage:
-      'https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-  },
-  {
-    id: '5',
-    title: 'Optimizing Web Performance: A Comprehensive Guide',
-    slug: 'optimizing-web-performance',
-    excerpt:
-      'Learn techniques and best practices to improve the performance of your web applications.',
-    publishedAt: '2023-02-25T16:20:00Z',
-    author: {
-      id: '1',
-      name: 'Jane Doe',
-      avatar:
-        'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
-      bio: 'Performance optimization specialist and web architect',
-    },
-    category: { id: '4', name: 'Performance', slug: 'performance' },
-    tags: [
-      { id: '5', name: 'Optimization', slug: 'optimization' },
-      { id: '10', name: 'Web Vitals', slug: 'web-vitals' },
-    ],
-    readingTime: '12 min read',
-    status: 'published',
-    coverImage:
-      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2015&q=80',
-    featuredImage:
-      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2015&q=80',
-  },
-  {
-    id: '6',
-    title: 'Creating Accessible Web Applications',
-    slug: 'creating-accessible-web-applications',
-    excerpt:
-      'Discover how to make your web applications accessible to all users, including those with disabilities.',
-    publishedAt: '2023-02-20T13:10:00Z',
-    author: {
-      id: '1',
-      name: 'Jane Doe',
-      avatar:
-        'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
-      bio: 'Accessibility advocate and inclusive design expert',
-    },
-    category: { id: '5', name: 'Accessibility', slug: 'accessibility' },
-    tags: [
-      { id: '6', name: 'Inclusive Design', slug: 'inclusive-design' },
-      { id: '11', name: 'ARIA', slug: 'aria' },
-    ],
-    readingTime: '9 min read',
-    status: 'published',
-    coverImage:
-      'https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80',
-    featuredImage:
-      'https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80',
-  },
-  {
-    id: '7',
-    title: 'Mastering Git Workflows for Teams',
-    slug: 'mastering-git-workflows',
-    excerpt:
-      'Learn effective Git branching strategies and workflows for collaborative development teams.',
-    publishedAt: '2023-02-15T10:30:00Z',
-    author: {
-      id: '1',
-      name: 'Jane Doe',
-      avatar:
-        'https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
-      bio: 'DevOps engineer and version control expert',
-    },
-    category: { id: '7', name: 'DevOps', slug: 'devops' },
-    tags: [
-      { id: '12', name: 'Git', slug: 'git' },
-      { id: '13', name: 'Collaboration', slug: 'collaboration' },
-    ],
-    readingTime: '8 min read',
-    status: 'published',
-    coverImage:
-      'https://images.unsplash.com/photo-1556075798-4825dfaaf498?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80',
-    featuredImage:
-      'https://images.unsplash.com/photo-1556075798-4825dfaaf498?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80',
-  },
-  {
-    id: '8',
-    title: 'Microservices Architecture: Patterns and Best Practices',
-    slug: 'microservices-architecture-patterns',
-    excerpt:
-      'Explore the key patterns and best practices for designing and implementing microservices architecture.',
-    publishedAt: '2023-02-10T08:45:00Z',
-    author: {
-      id: '1',
-      name: 'Jane Doe',
-      avatar:
-        'https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
-      bio: 'System architect specializing in distributed systems',
-    },
-    category: { id: '8', name: 'Architecture', slug: 'architecture' },
-    tags: [
-      { id: '14', name: 'Microservices', slug: 'microservices' },
-      { id: '15', name: 'System Design', slug: 'system-design' },
-    ],
-    readingTime: '11 min read',
-    status: 'published',
-    coverImage:
-      'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2068&q=80',
-    featuredImage:
-      'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2068&q=80',
-  },
-  {
-    id: '9',
-    title: 'GraphQL vs REST: Choosing the Right API Paradigm',
-    slug: 'graphql-vs-rest-api-paradigm',
-    excerpt:
-      'Compare GraphQL and REST API approaches to determine which is best for your application needs.',
-    publishedAt: '2023-02-05T14:20:00Z',
-    author: {
-      id: '1',
-      name: 'Jane Doe',
-      avatar:
-        'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80',
-      bio: 'API design expert and software architect',
-    },
-    category: { id: '9', name: 'API Design', slug: 'api-design' },
-    tags: [
-      { id: '16', name: 'GraphQL', slug: 'graphql' },
-      { id: '17', name: 'REST', slug: 'rest' },
-    ],
-    readingTime: '9 min read',
-    status: 'published',
-    coverImage:
-      'https://images.unsplash.com/photo-1623282033815-40b05d96c903?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    featuredImage:
-      'https://images.unsplash.com/photo-1623282033815-40b05d96c903?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-  },
-];
-
-// Expanded trending topics data
-const TRENDING_TOPICS = [
-  { id: '1', name: 'React', slug: 'react', count: 15, icon: '⚛️' },
-  { id: '2', name: 'CSS', slug: 'css', count: 12, icon: '🎨' },
-  { id: '3', name: 'Node.js', slug: 'nodejs', count: 10, icon: '🚀' },
-  { id: '4', name: 'Performance', slug: 'performance', count: 8, icon: '⚡' },
-  { id: '5', name: 'Accessibility', slug: 'accessibility', count: 7, icon: '♿' },
-  { id: '6', name: 'TypeScript', slug: 'typescript', count: 14, icon: '📘' },
-  { id: '7', name: 'JavaScript', slug: 'javascript', count: 20, icon: '📜' },
-  { id: '8', name: 'DevOps', slug: 'devops', count: 6, icon: '🔄' },
-];
-
-// New insights data
-const LATEST_INSIGHTS = [
-  {
-    id: '1',
-    title: 'The Future of Web Development',
-    excerpt:
-      'Exploring upcoming trends and technologies that will shape the web in the coming years.',
-    icon: '🔮',
-    link: '/blog/future-of-web-development',
-  },
-  {
-    id: '2',
-    title: 'Enterprise Architecture Patterns',
-    excerpt: 'Best practices for designing scalable and maintainable enterprise applications.',
-    icon: '🏗️',
-    link: '/blog/enterprise-architecture-patterns',
-  },
-  {
-    id: '3',
-    title: 'Security in Modern Web Applications',
-    excerpt: 'Essential security considerations for protecting your web applications from threats.',
-    icon: '🔒',
-    link: '/blog/security-modern-web-applications',
-  },
-  {
-    id: '4',
-    title: 'Microservices vs Monoliths',
-    excerpt: 'Comparing architectural approaches for enterprise applications.',
-    icon: '⚖️',
-    link: '/blog/microservices-vs-monoliths',
-  },
-];
-
-// New categories data
-const ENTERPRISE_CATEGORIES = [
-  { id: '1', name: 'Frontend Development', slug: 'frontend', count: 24, icon: '🖥️' },
-  { id: '2', name: 'Backend Systems', slug: 'backend', count: 18, icon: '⚙️' },
-  { id: '3', name: 'DevOps & CI/CD', slug: 'devops', count: 12, icon: '🔄' },
-  { id: '4', name: 'Cloud Solutions', slug: 'cloud', count: 15, icon: '☁️' },
-  { id: '5', name: 'Security & Compliance', slug: 'security', count: 9, icon: '🔐' },
-  { id: '6', name: 'Data Engineering', slug: 'data', count: 11, icon: '📊' },
-];
-
-// New events data
-const UPCOMING_EVENTS = [
-  {
-    id: '1',
-    title: 'React Conference 2023',
-    date: 'June 15-17, 2023',
-    location: 'San Francisco, CA',
-    link: '/events/react-conference-2023',
-  },
-  {
-    id: '2',
-    title: 'Web Performance Workshop',
-    date: 'July 10, 2023',
-    location: 'Online',
-    link: '/events/web-performance-workshop',
-  },
-  {
-    id: '3',
-    title: 'Enterprise Architecture Summit',
-    date: 'August 5-7, 2023',
-    location: 'New York, NY',
-    link: '/events/enterprise-architecture-summit',
-  },
-  {
-    id: '4',
-    title: 'DevOps Pipeline Optimization',
-    date: 'September 12, 2023',
-    location: 'Online',
-    link: '/events/devops-pipeline-optimization',
-  },
-];
-
+/**
+ * Home page component
+ */
 const HomePage: React.FC = () => {
   // Limit recent posts to a maximum of 6
-  const displayedRecentPosts = RECENT_POSTS.slice(0, 6);
-  const hasMorePosts = RECENT_POSTS.length > 6;
+  const displayedRecentPosts = homePageData.recentPosts.slice(0, 6);
+  const hasMorePosts = homePageData.recentPosts.length > 6;
 
   return (
-    <div className="home-page">
+    <div className={styles.homePage}>
       {/* Hero Section */}
-      <section className="hero-section">
-        <div className="container">
-          <div className="hero-content">
-            <div className="hero-text">
-              <h1 className="hero-title">Enterprise Web Development Insights</h1>
-              <p className="hero-subtitle">
+      <section className={classnames(styles.section, styles.heroSection)}>
+        <div className={styles.container}>
+          <div className={styles.heroContent}>
+            <div className={styles.heroText}>
+              <h1 className={styles.heroTitle}>Enterprise Web Development Insights</h1>
+              <p className={styles.heroSubtitle}>
                 Expert analysis, best practices, and cutting-edge techniques for building modern
                 enterprise applications
               </p>
-              <div className="hero-actions">
-                <Link to="/blog" className="btn btn-primary">
+              <div className={styles.heroActions}>
+                <Link to="/blog" className={classnames(styles.btn, styles.btnPrimary)}>
                   Explore Articles
                 </Link>
-                <Link to="/resources" className="btn btn-outline">
+                <Link to="/resources" className={classnames(styles.btn, styles.btnOutline)}>
                   View Resources
                 </Link>
               </div>
             </div>
-            <div className="hero-image">
+            <div className={styles.heroImage}>
               <img
                 src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
                 alt="Enterprise Web Development"
@@ -370,17 +45,17 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Featured Articles Section */}
-      <section className="featured-section">
+      <section className={classnames(styles.section, styles.featuredSection)}>
         <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">Featured Articles</h2>
-            <Link to="/blog" className="view-all-link">
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Featured Articles</h2>
+            <Link to="/blog" className={styles.viewAllLink}>
               View All Articles
             </Link>
           </div>
 
-          <div className="featured-grid">
-            {FEATURED_POSTS.map(post => (
+          <div className={styles.featuredGrid}>
+            {homePageData.featuredPosts.map(post => (
               <PostCard key={post.id} post={post} variant="featured" />
             ))}
           </div>
@@ -388,24 +63,28 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Enterprise Categories Section */}
-      <section className="categories-section">
+      <section className={classnames(styles.section, styles.categoriesSection)}>
         <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">Enterprise Solutions</h2>
-            <Link to="/categories" className="view-all-link">
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Enterprise Solutions</h2>
+            <Link to="/categories" className={styles.viewAllLink}>
               View All Categories
             </Link>
           </div>
 
-          <div className="categories-grid">
-            {ENTERPRISE_CATEGORIES.map(category => (
-              <Link key={category.id} to={`/categories/${category.slug}`} className="category-card">
-                <span className="category-icon">{category.icon}</span>
-                <div className="category-content">
-                  <h3 className="category-name">{category.name}</h3>
-                  <span className="category-count">{category.count} articles</span>
+          <div className={styles.categoriesGrid}>
+            {homePageData.enterpriseCategories.map(category => (
+              <Link
+                key={category.id}
+                to={`/categories/${category.slug}`}
+                className={styles.categoryCard}
+              >
+                <span className={styles.categoryIcon}>{category.icon}</span>
+                <div className={styles.categoryContent}>
+                  <h3 className={styles.categoryName}>{category.name}</h3>
+                  <span className={styles.categoryCount}>{category.count} articles</span>
                 </div>
-                <span className="category-arrow">→</span>
+                <span className={styles.categoryArrow}>→</span>
               </Link>
             ))}
           </div>
@@ -413,34 +92,38 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Trending Topics & Insights Section */}
-      <section className="topics-insights-section">
+      <section className={classnames(styles.section, styles.topicsInsightsSection)}>
         <div className="container">
-          <div className="topics-insights-grid">
-            <div className="trending-topics">
-              <h2 className="section-title">Trending Topics</h2>
-              <div className="topics-list">
-                {TRENDING_TOPICS.map(topic => (
-                  <Link key={topic.id} to={`/categories/${topic.slug}`} className="topic-card">
-                    <span className="topic-icon">{topic.icon}</span>
-                    <div className="topic-content">
-                      <h3 className="topic-name">{topic.name}</h3>
-                      <span className="topic-count">{topic.count} articles</span>
+          <div className={styles.topicsInsightsGrid}>
+            <div className={styles.trendingTopics}>
+              <h2 className={styles.sectionTitle}>Trending Topics</h2>
+              <div className={styles.topicsList}>
+                {homePageData.trendingTopics.map(topic => (
+                  <Link
+                    key={topic.id}
+                    to={`/categories/${topic.slug}`}
+                    className={styles.topicCard}
+                  >
+                    <span className={styles.topicIcon}>{topic.icon}</span>
+                    <div className={styles.topicContent}>
+                      <h3 className={styles.topicName}>{topic.name}</h3>
+                      <span className={styles.topicCount}>{topic.count} articles</span>
                     </div>
-                    <span className="topic-arrow">→</span>
+                    <span className={styles.topicArrow}>→</span>
                   </Link>
                 ))}
               </div>
             </div>
 
-            <div className="latest-insights">
-              <h2 className="section-title">Latest Insights</h2>
-              <div className="insights-list">
-                {LATEST_INSIGHTS.map(insight => (
-                  <Link key={insight.id} to={insight.link} className="insight-card">
-                    <span className="insight-icon">{insight.icon}</span>
-                    <div className="insight-content">
-                      <h3 className="insight-title">{insight.title}</h3>
-                      <p className="insight-excerpt">{insight.excerpt}</p>
+            <div className={styles.latestInsights}>
+              <h2 className={styles.sectionTitle}>Latest Insights</h2>
+              <div className={styles.insightsList}>
+                {homePageData.latestInsights.map(insight => (
+                  <Link key={insight.id} to={insight.link} className={styles.insightCard}>
+                    <span className={styles.insightIcon}>{insight.icon}</span>
+                    <div className={styles.insightContent}>
+                      <h3 className={styles.insightTitle}>{insight.title}</h3>
+                      <p className={styles.insightExcerpt}>{insight.excerpt}</p>
                     </div>
                   </Link>
                 ))}
@@ -451,19 +134,21 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Recent Articles Section */}
-      <section className="recent-section">
+      <section className={classnames(styles.section, styles.recentSection)}>
         <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">Recent Articles</h2>
-            <Link to="/blog" className="view-all-link">
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Recent Articles</h2>
+            <Link to="/blog" className={styles.viewAllLink}>
               View All Articles{' '}
               {hasMorePosts && (
-                <span className="more-indicator">(+{RECENT_POSTS.length - 6} more)</span>
+                <span className={styles.moreIndicator}>
+                  (+{homePageData.recentPosts.length - 6} more)
+                </span>
               )}
             </Link>
           </div>
 
-          <div className="recent-grid">
+          <div className={styles.recentGrid}>
             {displayedRecentPosts.map(post => (
               <PostCard key={post.id} post={post} variant="default" />
             ))}
@@ -472,22 +157,22 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Events Section */}
-      <section className="events-section">
+      <section className={classnames(styles.section, styles.eventsSection)}>
         <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">Upcoming Events</h2>
-            <Link to="/events" className="view-all-link">
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Upcoming Events</h2>
+            <Link to="/events" className={styles.viewAllLink}>
               View All Events
             </Link>
           </div>
 
-          <div className="events-grid">
-            {UPCOMING_EVENTS.map(event => (
-              <Link key={event.id} to={event.link} className="event-card">
-                <div className="event-content">
-                  <h3 className="event-title">{event.title}</h3>
-                  <div className="event-details">
-                    <span className="event-date">
+          <div className={styles.eventsGrid}>
+            {homePageData.upcomingEvents.map(event => (
+              <Link key={event.id} to={event.link} className={styles.eventCard}>
+                <div className={styles.eventContent}>
+                  <h3 className={styles.eventTitle}>{event.title}</h3>
+                  <div className={styles.eventDetails}>
+                    <span className={styles.eventDate}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -496,7 +181,7 @@ const HomePage: React.FC = () => {
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="event-icon"
+                        className={styles.eventIcon}
                       >
                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                         <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -505,7 +190,7 @@ const HomePage: React.FC = () => {
                       </svg>
                       {event.date}
                     </span>
-                    <span className="event-location">
+                    <span className={styles.eventLocation}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -514,7 +199,7 @@ const HomePage: React.FC = () => {
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="event-icon"
+                        className={styles.eventIcon}
                       >
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
@@ -523,7 +208,7 @@ const HomePage: React.FC = () => {
                     </span>
                   </div>
                 </div>
-                <span className="event-arrow">→</span>
+                <span className={styles.eventArrow}>→</span>
               </Link>
             ))}
           </div>
