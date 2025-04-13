@@ -1,0 +1,70 @@
+@use "../../../../../styles/mixins.scss" as mixins;
+
+.calendarGridContainer {
+  position: relative;
+}
+
+.calendarGrid {
+  background: rgba(255, 255, 255, 0.01);
+  border-radius: var(--border-radius-xl);
+  overflow: visible;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  margin-bottom: var(--spacing-8);
+  position: relative;
+  z-index: 1;
+
+  .weekdayLabels {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: rgba(var(--color-primary-rgb), 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+    .weekdayLabel {
+      padding: var(--spacing-3);
+      text-align: center;
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--font-size-sm);
+      color: var(--color-primary);
+    }
+  }
+
+  .calendarWeek {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+.hoverCardPortal {
+  position: fixed;
+  z-index: 1000;
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.3));
+  animation: fadeScale 0.25s cubic-bezier(0.17, 0.85, 0.45, 1);
+  transform-origin: top left;
+  pointer-events: auto;
+
+  // 防止高度溢出
+  max-height: 80vh;
+  overflow: visible;
+
+  // 确保hover card层级高于其他元素
+  > div {
+    z-index: 1001;
+  }
+}
+
+@keyframes fadeScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

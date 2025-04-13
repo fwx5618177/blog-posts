@@ -1,0 +1,28 @@
+@use "../../../../../styles/mixins.scss" as mixins;
+
+.listView {
+  margin-top: var(--spacing-6);
+
+  .noResults {
+    padding: var(--spacing-6);
+    text-align: center;
+    color: var(--color-text-secondary);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: var(--border-radius-xl);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .listViewGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--spacing-6);
+
+    @include mixins.tablet {
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    }
+
+    @include mixins.desktop {
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    }
+  }
+}

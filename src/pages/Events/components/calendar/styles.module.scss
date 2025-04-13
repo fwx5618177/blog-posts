@@ -1,0 +1,175 @@
+@use "../../../../styles/mixins.scss" as mixins;
+
+.calendarSection {
+  margin-bottom: var(--spacing-12);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--border-radius-2xl);
+  padding: var(--spacing-8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(var(--color-primary-rgb), 0.2),
+      transparent
+    );
+  }
+
+  @include mixins.mobile {
+    padding: var(--spacing-4);
+  }
+
+  .calendarHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-8);
+    flex-wrap: wrap;
+    gap: var(--spacing-4);
+
+    @include mixins.mobile {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .calendarHeaderTitle {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--spacing-6);
+      padding-bottom: var(--spacing-2);
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 80px;
+        height: 2px;
+        border-radius: var(--border-radius-full);
+        background: linear-gradient(90deg, var(--color-primary), transparent);
+      }
+
+      .calendarHeaderIcon {
+        margin-right: var(--spacing-2);
+        color: var(--color-primary);
+      }
+    }
+  }
+
+  .calendarControls {
+    display: flex;
+    gap: var(--spacing-4);
+    align-items: center;
+
+    @include mixins.mobile {
+      width: 100%;
+      flex-direction: column;
+      gap: var(--spacing-3);
+    }
+
+    .monthNavigation {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: var(--border-radius-full);
+      padding: 0.3rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+
+      .monthNavigationButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.4rem;
+        height: 2.4rem;
+        border-radius: var(--border-radius-full);
+        background: transparent;
+        border: none;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.08);
+          color: var(--color-text);
+        }
+
+        &:active {
+          transform: scale(0.95);
+        }
+      }
+
+      .currentMonthDisplay {
+        margin: 0 var(--spacing-4);
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-medium);
+        min-width: 9rem;
+        text-align: center;
+        color: var(--color-text);
+      }
+    }
+
+    .viewToggle {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: var(--border-radius-full);
+      padding: 0.3rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+
+      @include mixins.mobile {
+        width: 100%;
+      }
+
+      .viewToggleButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 1.2rem;
+        border-radius: var(--border-radius-full);
+        background: transparent;
+        border: none;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: var(--font-size-sm);
+        gap: 0.5rem;
+
+        @include mixins.mobile {
+          flex: 1;
+        }
+
+        &:hover {
+          color: var(--color-text);
+        }
+
+        &.active {
+          background: rgba(var(--color-primary-rgb), 0.15);
+          color: var(--color-primary);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .viewToggleIcon {
+          font-size: 0.9em;
+        }
+      }
+    }
+  }
+}

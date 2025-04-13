@@ -1,0 +1,943 @@
+@use "../../../../styles/mixins.scss" as mixins;
+
+.calendarSection {
+  margin-bottom: var(--spacing-12);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--border-radius-2xl);
+  padding: var(--spacing-8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(var(--color-primary-rgb), 0.2),
+      transparent
+    );
+  }
+
+  @include mixins.mobile {
+    padding: var(--spacing-4);
+  }
+
+  .calendarHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-8);
+    flex-wrap: wrap;
+    gap: var(--spacing-4);
+
+    @include mixins.mobile {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .calendarHeaderTitle {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--spacing-6);
+      padding-bottom: var(--spacing-2);
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 80px;
+        height: 2px;
+        border-radius: var(--border-radius-full);
+        background: linear-gradient(90deg, var(--color-primary), transparent);
+      }
+
+      .calendarHeaderIcon {
+        margin-right: var(--spacing-2);
+        color: var(--color-primary);
+      }
+    }
+  }
+
+  .calendarControls {
+    display: flex;
+    gap: var(--spacing-4);
+    align-items: center;
+
+    @include mixins.mobile {
+      width: 100%;
+      flex-direction: column;
+      gap: var(--spacing-3);
+    }
+
+    .monthNavigation {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: var(--border-radius-full);
+      padding: 0.3rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+
+      .monthNavigationButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.4rem;
+        height: 2.4rem;
+        border-radius: var(--border-radius-full);
+        background: transparent;
+        border: none;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.08);
+          color: var(--color-text);
+        }
+
+        &:active {
+          transform: scale(0.95);
+        }
+      }
+
+      .currentMonthDisplay {
+        margin: 0 var(--spacing-4);
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-medium);
+        min-width: 9rem;
+        text-align: center;
+        color: var(--color-text);
+      }
+    }
+
+    .viewToggle {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: var(--border-radius-full);
+      padding: 0.3rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+
+      @include mixins.mobile {
+        width: 100%;
+      }
+
+      .viewToggleButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 1.2rem;
+        border-radius: var(--border-radius-full);
+        background: transparent;
+        border: none;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: var(--font-size-sm);
+        gap: 0.5rem;
+
+        @include mixins.mobile {
+          flex: 1;
+        }
+
+        &:hover {
+          color: var(--color-text);
+        }
+
+        &.active {
+          background: rgba(var(--color-primary-rgb), 0.15);
+          color: var(--color-primary);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .viewToggleIcon {
+          font-size: 0.9em;
+        }
+      }
+    }
+  }
+
+  .calendarGrid {
+    background: rgba(255, 255, 255, 0.01);
+    border-radius: var(--border-radius-xl);
+    overflow: visible;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+    margin-bottom: var(--spacing-8);
+    position: relative;
+    z-index: 1;
+
+    .weekdayLabels {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      background: rgba(var(--color-primary-rgb), 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+      .weekdayLabel {
+        padding: var(--spacing-3);
+        text-align: center;
+        font-weight: var(--font-weight-semibold);
+        font-size: var(--font-size-sm);
+        color: var(--color-primary);
+      }
+    }
+
+    .calendarWeek {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .calendarDay {
+        min-height: 9rem;
+        padding: var(--spacing-2);
+        border-right: 1px solid rgba(255, 255, 255, 0.03);
+        position: relative;
+        transition: all 0.3s ease;
+        overflow: hidden;
+
+        @include mixins.mobile {
+          min-height: 6rem;
+          padding: var(--spacing-1);
+        }
+
+        &:last-child {
+          border-right: none;
+        }
+
+        &.currentMonth {
+          background: rgba(255, 255, 255, 0.01);
+        }
+
+        &.otherMonth {
+          background: rgba(0, 0, 0, 0.1);
+          color: rgba(255, 255, 255, 0.3);
+        }
+
+        &.today {
+          box-shadow: inset 0 0 0 2px var(--color-primary);
+          border-radius: var(--border-radius-xl);
+          background: rgba(var(--color-primary-rgb), 0.03);
+
+          &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(var(--color-primary-rgb), 0.3), transparent);
+          }
+        }
+
+        &.hasEvents {
+          background: rgba(var(--color-primary-rgb), 0.02);
+        }
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.05);
+          overflow: visible;
+          z-index: 20;
+          transform: scale(1.02);
+          box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.15),
+            0 0 0 1px rgba(255, 255, 255, 0.08);
+          border-radius: var(--border-radius-xl);
+        }
+
+        .dayHeader {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: var(--spacing-1);
+          margin-bottom: var(--spacing-2);
+          position: relative;
+          z-index: 2;
+
+          .dayNumber {
+            font-weight: var(--font-weight-medium);
+            font-size: var(--font-size-sm);
+
+            .today & {
+              background: var(--color-primary);
+              color: white;
+              width: 2rem;
+              height: 2rem;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-radius: var(--border-radius-full);
+              box-shadow: 0 2px 8px rgba(var(--color-primary-rgb), 0.4);
+            }
+
+            .otherMonth & {
+              color: rgba(255, 255, 255, 0.3);
+            }
+          }
+
+          .eventCount {
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-semibold);
+            background: rgba(var(--color-secondary-rgb), 0.15);
+            color: var(--color-secondary);
+            padding: 0.1rem 0.5rem;
+            border-radius: var(--border-radius-full);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+            .today & {
+              background: rgba(var(--color-primary-rgb), 0.2);
+              color: var(--color-primary);
+            }
+          }
+        }
+
+        .dayEvents {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+          margin-top: var(--spacing-1);
+          max-height: calc(100% - 3.5rem);
+          overflow: hidden;
+          transition: all 0.3s ease;
+
+          .calendarDay:hover & {
+            max-height: none;
+          }
+
+          // 更多事件提示
+          .moreEvents {
+            text-align: center;
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+            background: rgba(var(--color-success-rgb), 0.08);
+            border-radius: var(--border-radius-lg);
+            padding: 0.5rem 0.7rem;
+            margin-top: 0.4rem;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(var(--color-success-rgb), 0.1);
+
+            &:hover {
+              background: rgba(var(--color-success-rgb), 0.12);
+              transform: translateY(-2px);
+              box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+              color: var(--color-success);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// 事件容器，用于悬浮卡片定位
+.eventContainer {
+  position: relative;
+  max-width: 100%;
+
+  &:hover {
+    z-index: 100;
+
+    .eventHoverCard {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .calendarEvent {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.7rem;
+    border-radius: var(--border-radius-lg);
+    font-size: var(--font-size-xs);
+    line-height: 1.2;
+    text-decoration: none !important;
+    transition: all 0.3s ease;
+    gap: 0.4rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    max-width: 100%;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+    background: linear-gradient(
+      120deg,
+      rgba(var(--color-success-rgb), 0.08),
+      rgba(var(--color-secondary-rgb), 0.05)
+    );
+    color: var(--color-success);
+    border: 1px solid rgba(var(--color-success-rgb), 0.15);
+
+    .eventIndicator {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      border-radius: 4px 0 0 4px;
+      background: var(--color-success);
+      box-shadow: 0 0 8px rgba(var(--color-success-rgb), 0.4);
+    }
+
+    .eventTime {
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--font-size-xs);
+      min-width: 3rem;
+      padding-left: 6px;
+      color: var(--color-success);
+    }
+
+    .eventTitle {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: var(--font-weight-medium);
+    }
+
+    .eventIcon {
+      font-size: 0.8rem;
+      opacity: 0.8;
+      color: var(--color-success);
+    }
+
+    &:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      background: linear-gradient(
+        120deg,
+        rgba(var(--color-success-rgb), 0.12),
+        rgba(var(--color-secondary-rgb), 0.08)
+      );
+      border-color: rgba(var(--color-success-rgb), 0.25);
+    }
+  }
+
+  // 悬停卡片样式
+  .eventHoverCard {
+    position: absolute;
+    z-index: 110;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+    transition: all 0.4s cubic-bezier(0.17, 0.85, 0.45, 1);
+    width: 320px;
+    background: rgba(20, 22, 30, 0.95);
+    backdrop-filter: blur(15px);
+    border-radius: var(--border-radius-xl);
+    padding: var(--spacing-5);
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.05),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+    left: 0;
+    top: 100%;
+    margin-top: 8px;
+    pointer-events: none;
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background: rgba(20, 22, 30, 0.95);
+      border-radius: 2px;
+      top: -7px;
+      left: 20px;
+      transform: rotate(45deg);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: -3px -3px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    // 位于右侧边缘的卡片显示在左侧
+    .calendarDay:nth-child(6) &,
+    .calendarDay:nth-child(7) & {
+      right: 0;
+      left: auto;
+
+      &::before {
+        left: auto;
+        right: 20px;
+      }
+    }
+
+    // 位于底部行的卡片显示在上方
+    .calendarWeek:last-child .calendarDay & {
+      bottom: 100%;
+      top: auto;
+      margin-top: 0;
+      margin-bottom: 8px;
+
+      &::before {
+        bottom: -7px;
+        top: auto;
+        transform: rotate(225deg);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        border-left: 1px solid rgba(255, 255, 255, 0.08);
+        border-right: none;
+        border-bottom: none;
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.05);
+      }
+    }
+
+    // 右下角的卡片特殊处理
+    .calendarWeek:last-child .calendarDay:nth-child(6) &,
+    .calendarWeek:last-child .calendarDay:nth-child(7) & {
+      bottom: 100%;
+      top: auto;
+      right: 0;
+      left: auto;
+      margin-top: 0;
+      margin-bottom: 8px;
+
+      &::before {
+        bottom: -7px;
+        top: auto;
+        right: 20px;
+        left: auto;
+      }
+    }
+
+    @include mixins.mobile {
+      width: 260px;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%) translateY(10px) scale(0.98);
+
+      &::before {
+        left: 50%;
+        margin-left: -7px;
+      }
+
+      .calendarDay:nth-child(6) &,
+      .calendarDay:nth-child(7) & {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%) translateY(10px) scale(0.98);
+
+        &::before {
+          left: 50%;
+          right: auto;
+          margin-left: -7px;
+        }
+      }
+
+      .calendarWeek:last-child .calendarDay & {
+        top: auto;
+        bottom: 100%;
+        transform: translateX(-50%) translateY(-10px) scale(0.98);
+
+        &::before {
+          top: auto;
+          bottom: -7px;
+        }
+      }
+    }
+
+    .hoverCardHeader {
+      margin-bottom: var(--spacing-4);
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -10px;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0.05),
+          transparent
+        );
+      }
+
+      .hoverCardTitle {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-2);
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-semibold);
+        margin-bottom: var(--spacing-2);
+        z-index: 100;
+        letter-spacing: -0.01em;
+        line-height: 1.3;
+        color: var(--color-success);
+
+        .hoverCardIcon {
+          font-size: 1em;
+          flex-shrink: 0;
+          color: var(--color-success);
+        }
+      }
+
+      .hoverCardTime {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-2);
+        font-size: var(--font-size-sm);
+        color: var(--color-text-secondary);
+        margin-top: var(--spacing-2);
+
+        .hoverCardTimeIcon {
+          color: var(--color-text-secondary);
+          font-size: 0.9em;
+        }
+      }
+    }
+
+    .hoverCardDescription {
+      font-size: var(--font-size-sm);
+      line-height: 1.6;
+      color: var(--color-text-secondary);
+      margin: var(--spacing-4) 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .hoverCardFooter {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--spacing-3);
+
+      .hoverCardTags {
+        display: flex;
+        gap: var(--spacing-2);
+        flex-wrap: wrap;
+
+        .hoverCardTag {
+          font-size: var(--font-size-xs);
+          padding: 0.3rem 0.7rem;
+          border-radius: var(--border-radius-full);
+          background: rgba(255, 255, 255, 0.08);
+          color: var(--color-text-secondary);
+          transition: all 0.2s ease;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+          }
+        }
+      }
+
+      .hoverCardButton {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 1rem;
+        border-radius: var(--border-radius-full);
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-medium);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        background: rgba(var(--color-success-rgb), 0.15);
+        color: var(--color-success);
+        border: 1px solid rgba(var(--color-success-rgb), 0.2);
+
+        &:hover {
+          background: rgba(var(--color-success-rgb), 0.25);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(var(--color-success-rgb), 0.2);
+        }
+
+        .buttonIcon {
+          margin-left: var(--spacing-1);
+          transition: transform 0.2s ease;
+        }
+
+        &:hover .buttonIcon {
+          transform: translateX(3px);
+        }
+      }
+    }
+  }
+}
+
+// 列表视图样式优化
+.listView {
+  margin-top: var(--spacing-6);
+
+  .noResults {
+    padding: var(--spacing-6);
+    text-align: center;
+    color: var(--color-text-secondary);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: var(--border-radius-xl);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .listViewGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--spacing-6);
+
+    @include mixins.tablet {
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    }
+
+    @include mixins.desktop {
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    }
+
+    .listViewCard {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: var(--border-radius-xl);
+      overflow: hidden;
+      transition: all 0.4s var(--transition-bezier);
+      box-shadow:
+        0 12px 24px rgba(0, 0, 0, 0.1),
+        0 3px 8px rgba(0, 0, 0, 0.05),
+        inset 0 1px 1px rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: var(--spacing-5);
+      height: 100%;
+      animation: fadeIn 0.5s ease-out both;
+      backdrop-filter: blur(10px);
+
+      &:hover {
+        transform: translateY(-8px);
+        box-shadow:
+          0 20px 40px rgba(0, 0, 0, 0.15),
+          0 5px 15px rgba(0, 0, 0, 0.1),
+          inset 0 1px 1px rgba(255, 255, 255, 0.08);
+        background: rgba(var(--color-success-rgb), 0.03);
+        border-color: rgba(var(--color-success-rgb), 0.15);
+      }
+    }
+  }
+}
+
+.eventBadge {
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  background: rgba(var(--color-success-rgb), 0.1);
+  color: var(--color-success);
+
+  .eventTypeIcon {
+    margin-right: var(--spacing-2);
+  }
+}
+
+.eventDate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
+  border-radius: var(--border-radius-lg);
+  padding: 0.4rem 0.8rem;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 15px rgba(var(--color-success-rgb), 0.1);
+}
+
+.eventDateDay {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  color: var(--color-success);
+}
+
+.cardTitle {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-3);
+  line-height: 1.3;
+  position: relative;
+  padding-bottom: var(--spacing-2);
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    border-radius: var(--border-radius-full);
+    background: var(--color-success);
+  }
+}
+
+.cardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+
+  .metaIcon {
+    margin-right: var(--spacing-2);
+    opacity: 0.8;
+  }
+}
+
+.cardDescription {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  flex-grow: 1;
+  margin-bottom: var(--spacing-4);
+
+  // 文本截断
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  flex-wrap: wrap;
+  gap: var(--spacing-3);
+}
+
+.eventTags {
+  display: flex;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: var(--font-size-xs);
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--border-radius-full);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-text-secondary);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+  }
+}
+
+.cardButton {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  background: rgba(var(--color-success-rgb), 0.1);
+  color: var(--color-success);
+
+  .buttonIcon {
+    margin-left: var(--spacing-2);
+    font-size: 0.8em;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    background: rgba(var(--color-success-rgb), 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(var(--color-success-rgb), 0.15);
+
+    .buttonIcon {
+      transform: translateX(3px);
+    }
+  }
+}
+
+.eventDateMonth {
+  font-size: var(--font-size-xs);
+  opacity: 0.8;
+  text-transform: uppercase;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-4);
+
+  .eventBadge {
+    display: flex;
+    align-items: center;
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--border-radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    background: rgba(var(--color-success-rgb), 0.1);
+    color: var(--color-success);
+
+    .eventTypeIcon {
+      margin-right: var(--spacing-2);
+    }
+  }
+
+  .eventDate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
+    border-radius: var(--border-radius-lg);
+    padding: 0.4rem 0.8rem;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 15px rgba(var(--color-success-rgb), 0.1);
+
+    .eventDateDay {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      line-height: 1;
+      color: var(--color-success);
+    }
+
+    .eventDateMonth {
+      font-size: var(--font-size-xs);
+      opacity: 0.8;
+      text-transform: uppercase;
+    }
+  }
+}
