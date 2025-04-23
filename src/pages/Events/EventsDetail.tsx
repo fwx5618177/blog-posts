@@ -85,9 +85,8 @@ const EventsDetailPage: React.FC = () => {
 
   // 加载活动详情和相关活动
   useEffect(() => {
-    console.log('id:', id);
     void loadEventDetails();
-  }, [id]);
+  }, []);
 
   // 计算活动状态
   const getEventStatus = () => {
@@ -248,8 +247,6 @@ const EventsDetailPage: React.FC = () => {
       </div>
     );
   }
-
-  console.log('event:', event);
 
   if (!event) {
     return (

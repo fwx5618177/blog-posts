@@ -24,7 +24,7 @@ const MonthView: FC<{
     // 计算悬停卡片位置
     const rect = e.currentTarget.getBoundingClientRect();
     const x = rect.left + window.scrollX;
-    const y = rect.top + window.scrollY;
+    const y = rect.top;
 
     setHoverCardPosition({ x, y });
     setShowHoverCard(true);
@@ -63,12 +63,7 @@ const MonthView: FC<{
         {calendarWeeks.map((week, weekIndex) => (
           <div key={weekIndex} className={styles.calendarWeek}>
             {week.map((day, dayIndex) => (
-              <CalendarDay
-                key={dayIndex}
-                day={day}
-                onEventHover={handleMonthDayHover}
-                onEventLeave={handleMonthDayLeave}
-              />
+              <CalendarDay key={dayIndex} day={day} onEventHover={handleMonthDayHover} />
             ))}
           </div>
         ))}
@@ -84,6 +79,7 @@ const MonthView: FC<{
               top: `${hoverCardPosition.y + 30}px`,
             }}
             onClick={e => e.stopPropagation()}
+            onMouseLeave={handleMonthDayLeave}
           >
             <EventHoverCard event={selectedEvent} />
           </div>,
