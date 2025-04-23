@@ -7,7 +7,7 @@ import {
 } from './types';
 import { PostInfo } from '../Blog/types';
 
-// Featured Posts data
+// 特色文章数据
 export const FEATURED_POSTS: PostInfo[] = [
   {
     id: '1',
@@ -63,7 +63,7 @@ export const FEATURED_POSTS: PostInfo[] = [
   },
 ];
 
-// Recent posts data
+// 最近文章数据
 export const RECENT_POSTS: PostInfo[] = [
   {
     id: '3',

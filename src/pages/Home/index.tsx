@@ -5,17 +5,12 @@ import PostCard from '../../components/PostCard';
 import styles from './home.module.scss';
 import { homePageData } from './mockData';
 
-/**
- * Home page component
- */
 const HomePage: React.FC = () => {
-  // Limit recent posts to a maximum of 6
   const displayedRecentPosts = homePageData.recentPosts.slice(0, 6);
   const hasMorePosts = homePageData.recentPosts.length > 6;
 
   return (
     <div className={styles.homePage}>
-      {/* Hero Section */}
       <section className={classnames(styles.section, styles.heroSection)}>
         <div className={styles.container}>
           <div className={styles.heroContent}>
@@ -44,7 +39,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Featured Articles Section */}
+      {/* 特色文章部分 */}
       <section className={classnames(styles.section, styles.featuredSection)}>
         <div className="container">
           <div className={styles.sectionHeader}>
@@ -62,7 +57,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Enterprise Categories Section */}
+      {/* 企业类别部分 */}
       <section className={classnames(styles.section, styles.categoriesSection)}>
         <div className="container">
           <div className={styles.sectionHeader}>
@@ -91,7 +86,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Trending Topics & Insights Section */}
+      {/* 热门话题和洞察部分 */}
       <section className={classnames(styles.section, styles.topicsInsightsSection)}>
         <div className="container">
           <div className={styles.topicsInsightsGrid}>
@@ -133,7 +128,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Recent Articles Section */}
+      {/* 最近文章部分 */}
       <section className={classnames(styles.section, styles.recentSection)}>
         <div className="container">
           <div className={styles.sectionHeader}>
@@ -156,7 +151,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Events Section */}
+      {/* 活动部分 */}
       <section className={classnames(styles.section, styles.eventsSection)}>
         <div className="container">
           <div className={styles.sectionHeader}>
